@@ -30,7 +30,8 @@
     "verify": "yarn workspace @ss-2/snfoundry verify"
   },
   "dependencies": {
-    "postcss": "^8.4.38"
+    "postcss": "^8.4.38",
+    "sats-connect": "3.0.x"
   },
   "devDependencies": {
     "daisyui": "^4.7.3",
