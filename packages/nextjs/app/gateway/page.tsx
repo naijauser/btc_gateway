@@ -8,7 +8,7 @@ export const metadata = getMetadata({
 });
 
 const Gateway: NextPage = () => {
-    return <ConnectXverseWallet />;
-}
+  return <ConnectXverseWallet />;
+};
 
 export default Gateway;
