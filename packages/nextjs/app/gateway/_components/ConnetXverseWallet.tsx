@@ -1,3 +1,74 @@
+"use client";
+import React, { useState } from "react";
+import { AddressPurpose, request, RpcErrorCode } from "sats-connect";
+import { AddressInfoDropdown } from "./AddressInfoDropdown";
+
+// This is a placeholder component for connecting to the Xverse wallet.
+// You will need to implement the actual connection logic using the Xverse SDK or API.
+
 export function ConnectXverseWallet() {
-  return <div>Connect Xverse Wallet</div>;
+  const [walletConnected, setWalletConnected] = useState(false);
+
+  const connectWallet = async () => {
+    console.log("Connecting to Xverse Wallet...");
+    try {
+      const response = await request("wallet_connect", null);
+      if (response.status == "success") {
+        setWalletConnected(true);
+        const paymentAddressItem = response.result.addresses.find(
+          (address) => address.purpose === AddressPurpose.Payment,
+        );
+        const ordinalsAddressItem = response.result.addresses.find(
+          (address) => address.purpose === AddressPurpose.Ordinals,
+        );
+        const stacksAddressItem = response.result.addresses.find(
+          (address) => address.purpose === AddressPurpose.Stacks,
+        );
+
+        console.log("paymentAddressItem: ", paymentAddressItem);
+        console.log("ordinalsAddressItem: ", ordinalsAddressItem);
+        console.log("stacksAddressItem: ", stacksAddressItem);
+      } else {
+        if (response.error.code == RpcErrorCode.USER_REJECTION) {
+          console.error("User rejected wallet connection.", response.error);
+        } else {
+          console.error("Failed to connect to Xverse Wallet:", response.error);
+        }
+      }
+    } catch (e) {
+      console.error("Error connecting to Xverse Wallet:", e);
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
+      <div className="flex items-center space-x-2">
+        {walletConnected ? (
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
+            <button
+              onClick={() => connectWallet()}
+              disabled={false}
+              className="rounded-[18px] btn-sm  font-bold px-8 bg-btn-wallet py-3 cursor-pointer"
+            >
+              <AddressInfoDropdown
+                address={""}
+                blockExplorerAddressLink={undefined}
+                displayName={""}
+              />
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
+            <button
+              onClick={() => connectWallet()}
+              disabled={false}
+              className="rounded-[18px] btn-sm  font-bold px-8 bg-btn-wallet py-3 cursor-pointer"
+            >
+              Connect Xverse Wallet
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
