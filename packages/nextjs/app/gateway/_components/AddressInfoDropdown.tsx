@@ -22,6 +22,7 @@ import { useScaffoldStarkProfile } from "~~/hooks/scaffold-stark/useScaffoldStar
 import { useTheme } from "next-themes";
 import { default as NextImage } from "next/image";
 import { NetworkOptions } from "~~/components/scaffold-stark/CustomConnectButton/NetworkOptions";
+import { request } from "sats-connect";
 
 const allowedNetworks = getTargetNetworks();
 
@@ -84,9 +85,9 @@ export const AddressInfoDropdown = ({
     },
   );
 
-  const handleDisconnect = () => {
+  const handleDisconnect = async () => {
     try {
-      disconnect();
+      await request("wallet_disconnect", null);
       localStorage.removeItem("lastUsedConnector");
       localStorage.removeItem("lastConnectionTime");
       setWasDisconnectedManually(true);
