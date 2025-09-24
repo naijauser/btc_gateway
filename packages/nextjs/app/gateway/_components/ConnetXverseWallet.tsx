@@ -51,7 +51,7 @@ export function ConnectXverseWallet() {
               className="rounded-[18px] btn-sm  font-bold px-8 bg-btn-wallet py-3 cursor-pointer"
             >
               <AddressInfoDropdown
-                address={""}
+                address={"0x"}
                 blockExplorerAddressLink={undefined}
                 displayName={""}
               />
