@@ -45,17 +45,11 @@ export function ConnectXverseWallet() {
       <div className="flex items-center space-x-2">
         {walletConnected ? (
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
-            <button
-              onClick={() => connectWallet()}
-              disabled={false}
-              className="rounded-[18px] btn-sm  font-bold px-8 bg-btn-wallet py-3 cursor-pointer"
-            >
-              <AddressInfoDropdown
-                address={"0x"}
-                blockExplorerAddressLink={undefined}
-                displayName={""}
-              />
-            </button>
+            <AddressInfoDropdown
+              address={"0x"}
+              blockExplorerAddressLink={undefined}
+              displayName={""}
+            />
           </div>
         ) : (
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
