@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { getMetadata } from "~~/utils/scaffold-stark/getMetadata";
-import { ConnectXverseWallet } from "./_components/ConnetXverseWallet";
+import { ConnectXverseWallet } from "./_components/ConnectXverseWallet";
 
 export const metadata = getMetadata({
   title: "Gateway",
