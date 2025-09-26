@@ -69,6 +69,56 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atomiqlabs/base@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "@atomiqlabs/base@npm:11.0.0"
+  dependencies:
+    buffer: 6.0.3
+  checksum: aa85c1dcea3ef059d596dfbe1c796dda0b47625466d70b132d938ee9b7670721119a3740ee37a1aa5149ca4a666539d2ad86d93a05c91d809b35e7ee35e7b4a0
+  languageName: node
+  linkType: hard
+
+"@atomiqlabs/bolt11@npm:1.6.1":
+  version: 1.6.1
+  resolution: "@atomiqlabs/bolt11@npm:1.6.1"
+  dependencies:
+    "@scure/btc-signer": ^1.6.0
+    bech32: ^1.1.2
+    lodash.clonedeep: 4.5.0
+    safe-buffer: ^5.1.1
+  peerDependencies:
+    "@noble/curves": ^1.8.1
+    "@noble/hashes": ^1.7.1
+  checksum: 652cc13770cfb96ffcb0ab81ef6b7d5ed0fb7727f668ffe10472a71a4a002053931c73b98aa4aa32abcd63d2b753238fcd625292565a6e573d91d79b31214888
+  languageName: node
+  linkType: hard
+
+"@atomiqlabs/sdk-lib@npm:^15.0.0":
+  version: 15.0.9
+  resolution: "@atomiqlabs/sdk-lib@npm:15.0.9"
+  dependencies:
+    "@atomiqlabs/base": ^11.0.0
+    "@atomiqlabs/bolt11": 1.6.1
+    "@noble/ciphers": ^1.2.1
+    "@noble/hashes": ^1.7.1
+    "@scure/base": ^1.2.4
+    "@scure/btc-signer": ^1.6.0
+    buffer: 6.0.3
+    events: 3.3.0
+  checksum: c6793b104256b6805ecf9049c438e798cd2a1b76c2352d181595013b35f48ca26e95fe904c13db5de7e13137d361b30274365261d7654cbb5798c1e3c42acf52
+  languageName: node
+  linkType: hard
+
+"@atomiqlabs/sdk@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "@atomiqlabs/sdk@npm:6.0.1"
+  dependencies:
+    "@atomiqlabs/base": ^11.0.0
+    "@atomiqlabs/sdk-lib": ^15.0.0
+  checksum: a05bb07922f483068fc666f0a5db9d62339dbbcf02fc2c9803af23f3826f0aa42714f8e70fa4a7a3c133072357bd2864b05ae207eab074c1086636609360bd4a
+  languageName: node
+  linkType: hard
+
 "@babel/code-frame@npm:^7.10.4, @babel/code-frame@npm:^7.27.1":
   version: 7.27.1
   resolution: "@babel/code-frame@npm:7.27.1"
@@ -2252,7 +2302,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/ciphers@npm:^1.3.0":
+"@noble/ciphers@npm:^1.2.1, @noble/ciphers@npm:^1.3.0":
   version: 1.3.0
   resolution: "@noble/ciphers@npm:1.3.0"
   checksum: 19722c35475df9bc78db60d261d0b5ef8a6d722561efc2135453f943eaa421b492195dc666e3e4df2b755bca3739e04f04b9c660198559f5dd05d3cfbf1b9e92
@@ -2309,7 +2359,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/hashes@npm:1.8.0, @noble/hashes@npm:^1.1.2, @noble/hashes@npm:^1.2.0, @noble/hashes@npm:^1.4.0, @noble/hashes@npm:^1.8.0, @noble/hashes@npm:~1.8.0":
+"@noble/hashes@npm:1.8.0, @noble/hashes@npm:^1.1.2, @noble/hashes@npm:^1.2.0, @noble/hashes@npm:^1.4.0, @noble/hashes@npm:^1.7.1, @noble/hashes@npm:^1.8.0, @noble/hashes@npm:~1.8.0":
   version: 1.8.0
   resolution: "@noble/hashes@npm:1.8.0"
   checksum: c94e98b941963676feaba62475b1ccfa8341e3f572adbb3b684ee38b658df44100187fa0ef4220da580b13f8d27e87d5492623c8a02ecc61f23fb9960c7918f5
@@ -3876,16 +3926,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sats-connect/core@npm:0.4.1":
-  version: 0.4.1
-  resolution: "@sats-connect/core@npm:0.4.1"
+"@sats-connect/core@npm:0.6.11":
+  version: 0.6.11
+  resolution: "@sats-connect/core@npm:0.6.11"
   dependencies:
-    axios: 1.7.7
+    axios: 1.8.4
     bitcoin-address-validation: 2.2.3
     buffer: 6.0.3
     jsontokens: 4.0.1
-    valibot: 0.42.1
-  checksum: 3c0b4fa170643c76676a12bc37da43f56ea82a034d8ceae06130fab7f0f22c9f115b3e93967482f8d953d65bd7dbd8a61101a65b193b74d2b9c4a291a47dc275
+  peerDependencies:
+    valibot: 1.1.0
+  checksum: 459dc10e637fd8b84714e83a40f0c3077c4bf51fb4fec3d855605afbb1e9a5963e9857405f56ec30d2e04066077bd429ab12c2b07175cfbf16710873e2c0a7f2
   languageName: node
   linkType: hard
 
@@ -3936,7 +3987,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@scure/base@npm:~1.2.5":
+"@scure/base@npm:^1.2.4, @scure/base@npm:~1.2.5":
   version: 1.2.6
   resolution: "@scure/base@npm:1.2.6"
   checksum: 1058cb26d5e4c1c46c9cc0ae0b67cc66d306733baf35d6ebdd8ddaba242b80c3807b726e3b48cb0411bb95ec10d37764969063ea62188f86ae9315df8ea6b325
@@ -3964,6 +4015,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@scure/btc-signer@npm:^1.6.0":
+  version: 1.8.1
+  resolution: "@scure/btc-signer@npm:1.8.1"
+  dependencies:
+    "@noble/curves": ~1.9.0
+    "@noble/hashes": ~1.8.0
+    "@scure/base": ~1.2.5
+    micro-packed: ~0.7.3
+  checksum: a417586eace5faf9bf6ee58f5fd2d95fc2042842d376d55ef10b5465cc5d244ade10995036cd1772a61e42dc30f4fb9944b18f8e6b974332ce12dad2ece1a645
+  languageName: node
+  linkType: hard
+
 "@scure/starknet@npm:1.1.0":
   version: 1.1.0
   resolution: "@scure/starknet@npm:1.1.0"
@@ -3985,6 +4048,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@ss-2/nextjs@workspace:packages/nextjs"
   dependencies:
+    "@atomiqlabs/sdk": ^6.0.1
     "@heroicons/react": ^2.1.3
     "@keplr-wallet/common": ^0.12.175
     "@keplr-wallet/cosmos": ^0.12.175
@@ -4032,6 +4096,7 @@ __metadata:
     react-copy-to-clipboard: ^5.1.0
     react-dom: 19.0.0
     react-hot-toast: ^2.4.1
+    sats-connect: ^3.6.1
     shx: ^0.4.0
     starknet: 8.5.3
     tailwindcss: ^4
@@ -6214,14 +6279,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.7.7":
-  version: 1.7.7
-  resolution: "axios@npm:1.7.7"
+"axios@npm:1.8.4":
+  version: 1.8.4
+  resolution: "axios@npm:1.8.4"
   dependencies:
     follow-redirects: ^1.15.6
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
-  checksum: 882d4fe0ec694a07c7f5c1f68205eb6dc5a62aecdb632cc7a4a3d0985188ce3030e0b277e1a8260ac3f194d314ae342117660a151fabffdc5081ca0b5a8b47fe
+  checksum: e901dc1730bdcd769839b3d93ae6d6457a53d79b19a0eb623ebfea333441259ab51e63ca118baa47a5156567401466ac739f31087b4ee5e6770ab2e227484538
   languageName: node
   linkType: hard
 
@@ -6313,7 +6378,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bech32@npm:^1.1.4":
+"bech32@npm:^1.1.2, bech32@npm:^1.1.4":
   version: 1.1.4
   resolution: "bech32@npm:1.1.4"
   checksum: 0e98db619191548390d6f09ff68b0253ba7ae6a55db93dfdbb070ba234c1fd3308c0606fbcc95fad50437227b10011e2698b89f0181f6e7f845c499bd14d0f4b
@@ -8318,7 +8383,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"events@npm:^3.2.0":
+"events@npm:3.3.0, events@npm:^3.2.0":
   version: 3.3.0
   resolution: "events@npm:3.3.0"
   checksum: f6f487ad2198aa41d878fa31452f1a3c00958f46e9019286ff4787c84aac329332ab45c9cdc8c445928fc6d7ded294b9e005a7fce9426488518017831b272780
@@ -10259,6 +10324,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.clonedeep@npm:4.5.0":
+  version: 4.5.0
+  resolution: "lodash.clonedeep@npm:4.5.0"
+  checksum: 92c46f094b064e876a23c97f57f81fbffd5d760bf2d8a1c61d85db6d1e488c66b0384c943abee4f6af7debf5ad4e4282e74ff83177c9e63d8ff081a4837c3489
+  languageName: node
+  linkType: hard
+
 "lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
@@ -10455,6 +10527,15 @@ __metadata:
   version: 1.4.1
   resolution: "merge2@npm:1.4.1"
   checksum: 7268db63ed5169466540b6fb947aec313200bcf6d40c5ab722c22e242f651994619bcd85601602972d3c85bd2cc45a358a4c61937e9f11a061919a1da569b0c2
+  languageName: node
+  linkType: hard
+
+"micro-packed@npm:~0.7.3":
+  version: 0.7.3
+  resolution: "micro-packed@npm:0.7.3"
+  dependencies:
+    "@scure/base": ~1.2.5
+  checksum: ad622288c56bacd9d7fe177e4b351c7a58e23f08e8cec2c9106f1c9da8e88d51101d667ed95d3f57979b520917b86edda43175ff4b5c8dcd5b96db7102865fa8
   languageName: node
   linkType: hard
 
@@ -12295,7 +12376,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"safe-buffer@npm:^5.0.1, safe-buffer@npm:^5.1.0, safe-buffer@npm:^5.1.2, safe-buffer@npm:^5.2.0, safe-buffer@npm:^5.2.1, safe-buffer@npm:~5.2.0":
+"safe-buffer@npm:^5.0.1, safe-buffer@npm:^5.1.0, safe-buffer@npm:^5.1.1, safe-buffer@npm:^5.1.2, safe-buffer@npm:^5.2.0, safe-buffer@npm:^5.2.1, safe-buffer@npm:~5.2.0":
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
   checksum: b99c4b41fdd67a6aaf280fcd05e9ffb0813654894223afb78a31f14a19ad220bba8aba1cb14eddce1fcfb037155fe6de4e861784eb434f7d11ed58d1e70dd491
@@ -12330,14 +12411,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sats-connect@npm:3.0.x":
-  version: 3.0.1
-  resolution: "sats-connect@npm:3.0.1"
+"sats-connect@npm:^3.6.1":
+  version: 3.6.1
+  resolution: "sats-connect@npm:3.6.1"
   dependencies:
-    "@sats-connect/core": 0.4.1
+    "@sats-connect/core": 0.6.11
     "@sats-connect/make-default-provider-config": 0.0.10
     "@sats-connect/ui": 0.0.7
-  checksum: 0e049c8c15dba6c3e1fbcf85736ee7b282d2ecd50450283de5f59ccf854545ae2002692c04c78f50df438bb6098ff4bd859a3b2c9404337543bbe74bcff8b08d
+    valibot: 1.1.0
+  checksum: 0f6098b0578d4b223729b6164019fafdd84e52859ff7532daf8cdfa6c287ddbfb38139db7cecc49a12d47b4b830777dea39840cef7dc15f61c3187c32d5e1ccc
   languageName: node
   linkType: hard
 
@@ -12819,7 +12901,6 @@ __metadata:
     pinst: ^3.0.0
     postcss: ^8.4.38
     prettier: ^3.2.5
-    sats-connect: 3.0.x
   languageName: unknown
   linkType: soft
 
@@ -14091,15 +14172,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"valibot@npm:0.42.1":
-  version: 0.42.1
-  resolution: "valibot@npm:0.42.1"
+"valibot@npm:1.1.0":
+  version: 1.1.0
+  resolution: "valibot@npm:1.1.0"
   peerDependencies:
     typescript: ">=5"
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 9fe4b6f32e45807688ed86b47f55f3e36ce92e0429685c214ec8746ad6e9d50410a91fdeeb554fff58a8951ff159e8065f1cbb22b64f1497d3c9b1f4a6e737de
+  checksum: c1b95d4f783cd62713a1c32a7fd25eb42b588037135dbc2cf2b4788acc720306374f831576d29e91da42f716a497503842c457a3332a04dab92c00cb2fa3227a
   languageName: node
   linkType: hard
 
