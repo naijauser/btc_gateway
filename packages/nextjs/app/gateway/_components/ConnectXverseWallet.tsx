@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { AddressPurpose, request, RpcErrorCode } from "sats-connect";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
+import { Swap } from "./Swap";
 
 // This is a placeholder component for connecting to the Xverse wallet.
 // You will need to implement the actual connection logic using the Xverse SDK or API.
@@ -78,6 +79,7 @@ export function ConnectXverseWallet() {
           </div>
         )}
       </div>
+      <Swap />
     </div>
   );
 }

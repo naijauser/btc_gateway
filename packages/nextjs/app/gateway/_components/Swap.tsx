@@ -51,7 +51,7 @@ export function Swap() {
       3000n, // 3000 sats (0.00003 BTC)
       true, // Whether we define an input or output amount
       undefined, // Source address for the swaps, not used for swaps from BTC
-      "", // Destination address. TODO: Collect from user
+      "0x067b71c52c128cc94e466abd4b793fc02669bbd4336d9881a98c3aad83d3f710", // Destination address. TODO: Collect from user
     );
 
     // Relevant data created about the swap
@@ -72,5 +72,18 @@ export function Swap() {
     
   };
 
-  return <div>Swap Component</div>;
+  return (
+    <div>
+      <div>Swap Component</div>
+      <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
+        <button
+          onClick={() => swapTokens()}
+          disabled={false}
+          className="rounded-[18px] btn-sm  font-bold px-8 bg-btn-wallet py-3 cursor-pointer"
+        >
+          Swap BTC to STRK
+        </button>
+      </div>
+    </div>
+  );
 }
