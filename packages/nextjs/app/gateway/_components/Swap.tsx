@@ -5,7 +5,7 @@ import {
   StarknetInitializer,
   StarknetInitializerType,
 } from "@atomiqlabs/chain-starknet";
-import { BitcoinNetwork, SwapperFactory } from "@atomiqlabs/sdk";
+import { BitcoinNetwork, FeeType, SwapperFactory } from "@atomiqlabs/sdk";
 
 export function Swap() {
   const swapTokens = async () => {
@@ -45,7 +45,7 @@ export function Swap() {
     ); // Available after swap rejected due to too low/high amounts
 
     // Create swap quote
-    const swap = swapper.swap(
+    const swap = await swapper.swap(
       Tokens.BITCOIN.BTC, // Swap from BTC
       Tokens.STARKNET.STRK, // Into STRK
       3000n, // 3000 sats (0.00003 BTC)
@@ -53,6 +53,23 @@ export function Swap() {
       undefined, // Source address for the swaps, not used for swaps from BTC
       "", // Destination address. TODO: Collect from user
     );
+
+    // Relevant data created about the swap
+    console.log("Swap created: " + swap.getId() + ":"); // Unique swap ID
+    console.log("   Input: " + swap.getInputWithoutFee()); // Input amount excluding fee
+    console.log("   Fees: " + swap.getFee().amountInSrcToken); // Fees paid on the output
+    for (let fee of swap.getFeeBreakdown()) {
+      console.log("     - " +  FeeType[fee.type] + ": " + fee.fee.amountInSrcToken); // Fees paid on the output
+    }
+    console.log("     Input with fees: " + swap.getInput()); // Total amount paid including fees
+    console.log("     Output: " + swap.getOutput()); // Output amount
+    console.log("     Quote expiry: " + swap.getQuoteExpiry()+ " (in " + (swap.getQuoteExpiry()-Date.now())/1000 + " seconds)"); // Quote expiry timestamp
+    console.log("     Price:"); // Pricing Information
+    console.log("       - swap: " + swap.getPriceInfo().swapPrice); // Price of the current swap (excluding fees)
+    console.log("       - market: " + swap.getPriceInfo().marketPrice); // Current Market price
+    console.log("       - difference: " + swap.getPriceInfo().difference); // Difference between swap price and the current market price
+    console.log("     Minimum bitcoin transaction fee rate" + swap.minimumBtcFeeRate + "sats/vB"); // Minimum fee rate of the bitcoin transaction
+    
   };
 
   return <div>Swap Component</div>;
