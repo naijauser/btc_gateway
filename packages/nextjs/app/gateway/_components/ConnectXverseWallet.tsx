@@ -13,7 +13,11 @@ export function ConnectXverseWallet() {
     console.log("Connecting to Xverse Wallet...");
     try {
       const response = await request("wallet_connect", {
-        addresses: [AddressPurpose.Payment, AddressPurpose.Ordinals, AddressPurpose.Stacks],
+        addresses: [
+          AddressPurpose.Payment,
+          AddressPurpose.Ordinals,
+          AddressPurpose.Stacks,
+        ],
       });
       console.log(response);
       if (response.status == "success") {
@@ -42,9 +46,9 @@ export function ConnectXverseWallet() {
       console.error("Error connecting to Xverse Wallet:", e);
     }
 
-    const balanceResponse = await request('getBalance', undefined);
+    const balanceResponse = await request("getBalance", undefined);
 
-    if (balanceResponse.status === 'success') {
+    if (balanceResponse.status === "success") {
       console.log(balanceResponse.result);
     } else {
       console.error(balanceResponse.error);
