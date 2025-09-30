@@ -78,6 +78,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atomiqlabs/base@npm:^12.0.0":
+  version: 12.0.0
+  resolution: "@atomiqlabs/base@npm:12.0.0"
+  dependencies:
+    buffer: 6.0.3
+  checksum: 7e4b9f1ab770733784ab084dc754ddcfff7dd05d9b58fc5fe3c861e0b4a0ac3f560ed0f189f8a6aeaca5427679a625841676c4618e8a2007ea0057006684d8e7
+  languageName: node
+  linkType: hard
+
 "@atomiqlabs/bolt11@npm:1.6.1":
   version: 1.6.1
   resolution: "@atomiqlabs/bolt11@npm:1.6.1"
@@ -108,11 +117,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atomiqlabs/sdk-lib@npm:^15.0.0":
-  version: 15.0.9
-  resolution: "@atomiqlabs/sdk-lib@npm:15.0.9"
+"@atomiqlabs/messenger-nostr@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@atomiqlabs/messenger-nostr@npm:1.0.0"
   dependencies:
-    "@atomiqlabs/base": ^11.0.0
+    "@atomiqlabs/base": ^12.0.0
+    nostr-tools: ^2.15.0
+    ws: ^8.18.3
+  checksum: c0a4af951b6c3791b41c44fb2c178d6d23e40d1062ebb1fe8e34636cd32b70129e9105ed5a7935cc7fc395011a412fdf3008c9be7df65f441df2b9d43a20c10d
+  languageName: node
+  linkType: hard
+
+"@atomiqlabs/sdk-lib@npm:^16.0.0":
+  version: 16.0.1
+  resolution: "@atomiqlabs/sdk-lib@npm:16.0.1"
+  dependencies:
+    "@atomiqlabs/base": ^12.0.0
     "@atomiqlabs/bolt11": 1.6.1
     "@noble/ciphers": ^1.2.1
     "@noble/hashes": ^1.7.1
@@ -120,17 +140,18 @@ __metadata:
     "@scure/btc-signer": ^1.6.0
     buffer: 6.0.3
     events: 3.3.0
-  checksum: c6793b104256b6805ecf9049c438e798cd2a1b76c2352d181595013b35f48ca26e95fe904c13db5de7e13137d361b30274365261d7654cbb5798c1e3c42acf52
+  checksum: 29eb74c6e76246de2ccf56c8419c32d3d5dc02edf297a0bd6e3652c59d8e612216da83f792b90bbec2488f16b60530a1811f6afbd36356fb92f44c8db5ad3a0a
   languageName: node
   linkType: hard
 
-"@atomiqlabs/sdk@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "@atomiqlabs/sdk@npm:6.0.1"
+"@atomiqlabs/sdk@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "@atomiqlabs/sdk@npm:7.0.1"
   dependencies:
-    "@atomiqlabs/base": ^11.0.0
-    "@atomiqlabs/sdk-lib": ^15.0.0
-  checksum: a05bb07922f483068fc666f0a5db9d62339dbbcf02fc2c9803af23f3826f0aa42714f8e70fa4a7a3c133072357bd2864b05ae207eab074c1086636609360bd4a
+    "@atomiqlabs/base": ^12.0.0
+    "@atomiqlabs/messenger-nostr": ^1.0.0
+    "@atomiqlabs/sdk-lib": ^16.0.0
+  checksum: beefc318134ae7ea4563aa3a2d9031b97c859288fc71d14996c051c8a423e65c85fa7d349da8b7694742253d64cf7ea61f4ae9fe225a4dfb57f4b7a638351580
   languageName: node
   linkType: hard
 
@@ -2317,6 +2338,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@noble/ciphers@npm:^0.5.1":
+  version: 0.5.3
+  resolution: "@noble/ciphers@npm:0.5.3"
+  checksum: c5ed5d7d43b054c2051b3e0e220353cc9d31fa8d17b82cfb753d87f922e4e1e69b73ca5273a9cc457023f83d96d1d9a51678d2f6d4e58ca039d1111a62856d19
+  languageName: node
+  linkType: hard
+
 "@noble/ciphers@npm:^1.2.1, @noble/ciphers@npm:^1.3.0":
   version: 1.3.0
   resolution: "@noble/ciphers@npm:1.3.0"
@@ -2360,12 +2388,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@noble/curves@npm:~1.1.0":
+  version: 1.1.0
+  resolution: "@noble/curves@npm:1.1.0"
+  dependencies:
+    "@noble/hashes": 1.3.1
+  checksum: 2658cdd3f84f71079b4e3516c47559d22cf4b55c23ac8ee9d2b1f8e5b72916d9689e59820e0f9d9cb4a46a8423af5b56dc6bb7782405c88be06a015180508db5
+  languageName: node
+  linkType: hard
+
 "@noble/curves@npm:~1.8.1":
   version: 1.8.2
   resolution: "@noble/curves@npm:1.8.2"
   dependencies:
     "@noble/hashes": 1.7.2
   checksum: f26fd77b4d78fe26dba2754cbcaddee5da23a711a0c9778ee57764eb0084282d97659d9b0a760718f42493adf68665dbffdca9d6213950f03f079d09c465c096
+  languageName: node
+  linkType: hard
+
+"@noble/hashes@npm:1.3.1":
+  version: 1.3.1
+  resolution: "@noble/hashes@npm:1.3.1"
+  checksum: 7fdefc0f7a0c1ec27acc6ff88841793e3f93ec4ce6b8a6a12bfc0dd70ae6b7c4c82fe305fdfeda1735d5ad4a9eebe761e6693b3d355689c559e91242f4bc95b1
   languageName: node
   linkType: hard
 
@@ -2394,6 +2438,13 @@ __metadata:
   version: 1.8.0
   resolution: "@noble/hashes@npm:1.8.0"
   checksum: c94e98b941963676feaba62475b1ccfa8341e3f572adbb3b684ee38b658df44100187fa0ef4220da580b13f8d27e87d5492623c8a02ecc61f23fb9960c7918f5
+  languageName: node
+  linkType: hard
+
+"@noble/hashes@npm:~1.3.0, @noble/hashes@npm:~1.3.1":
+  version: 1.3.3
+  resolution: "@noble/hashes@npm:1.3.3"
+  checksum: 8a6496d1c0c64797339bc694ad06cdfaa0f9e56cd0c3f68ae3666cfb153a791a55deb0af9c653c7ed2db64d537aa3e3054629740d2f2338bb1dcb7ab60cd205b
   languageName: node
   linkType: hard
 
@@ -4011,6 +4062,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@scure/base@npm:1.1.1":
+  version: 1.1.1
+  resolution: "@scure/base@npm:1.1.1"
+  checksum: b4fc810b492693e7e8d0107313ac74c3646970c198bbe26d7332820886fa4f09441991023ec9aa3a2a51246b74409ab5ebae2e8ef148bbc253da79ac49130309
+  languageName: node
+  linkType: hard
+
 "@scure/base@npm:1.2.1":
   version: 1.2.1
   resolution: "@scure/base@npm:1.2.1"
@@ -4025,6 +4083,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@scure/base@npm:~1.1.0":
+  version: 1.1.9
+  resolution: "@scure/base@npm:1.1.9"
+  checksum: 120820a37dfe9dfe4cab2b7b7460552d08e67dee8057ed5354eb68d8e3440890ae983ce3bee957d2b45684950b454a2b6d71d5ee77c1fd3fddc022e2a510337f
+  languageName: node
+  linkType: hard
+
+"@scure/bip32@npm:1.3.1":
+  version: 1.3.1
+  resolution: "@scure/bip32@npm:1.3.1"
+  dependencies:
+    "@noble/curves": ~1.1.0
+    "@noble/hashes": ~1.3.1
+    "@scure/base": ~1.1.0
+  checksum: 394d65f77a40651eba21a5096da0f4233c3b50d422864751d373fcf142eeedb94a1149f9ab1dbb078086dab2d0bc27e2b1afec8321bf22d4403c7df2fea5bfe2
+  languageName: node
+  linkType: hard
+
 "@scure/bip32@npm:1.7.0, @scure/bip32@npm:^1.7.0":
   version: 1.7.0
   resolution: "@scure/bip32@npm:1.7.0"
@@ -4033,6 +4109,16 @@ __metadata:
     "@noble/hashes": ~1.8.0
     "@scure/base": ~1.2.5
   checksum: c83adca5a74ec5c4ded8ba93900d0065e4767c4759cf24c2674923aef01d45ba56f171574e3519f2341be99f53a333f01b674eb6cfeb6fa8379607c6d1bc90b5
+  languageName: node
+  linkType: hard
+
+"@scure/bip39@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@scure/bip39@npm:1.2.1"
+  dependencies:
+    "@noble/hashes": ~1.3.0
+    "@scure/base": ~1.1.0
+  checksum: c5bd6f1328fdbeae2dcdd891825b1610225310e5e62a4942714db51066866e4f7bef242c7b06a1b9dcc8043a4a13412cf5c5df76d3b10aa9e36b82e9b6e3eeaa
   languageName: node
   linkType: hard
 
@@ -4092,7 +4178,7 @@ __metadata:
   resolution: "@ss-2/nextjs@workspace:packages/nextjs"
   dependencies:
     "@atomiqlabs/chain-starknet": ^5.1.5
-    "@atomiqlabs/sdk": ^6.0.1
+    "@atomiqlabs/sdk": ^7.0.1
     "@heroicons/react": ^2.1.3
     "@keplr-wallet/common": ^0.12.175
     "@keplr-wallet/cosmos": ^0.12.175
@@ -11162,6 +11248,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nostr-tools@npm:^2.15.0":
+  version: 2.17.0
+  resolution: "nostr-tools@npm:2.17.0"
+  dependencies:
+    "@noble/ciphers": ^0.5.1
+    "@noble/curves": 1.2.0
+    "@noble/hashes": 1.3.1
+    "@scure/base": 1.1.1
+    "@scure/bip32": 1.3.1
+    "@scure/bip39": 1.2.1
+    nostr-wasm: 0.1.0
+  peerDependencies:
+    typescript: ">=5.0.0"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 79d604d2b3431d122df605a56b3b5aba61db7d3f6721c907ac9ff32c7778976c7394e598f34416e66317d752eeceddf8978775f0a752931aab6afe4f7ab99a43
+  languageName: node
+  linkType: hard
+
+"nostr-wasm@npm:0.1.0":
+  version: 0.1.0
+  resolution: "nostr-wasm@npm:0.1.0"
+  checksum: c0b404912d47c98efa69b4838a5bb7b2094c869b1aa2a96359c978c911878e9b37228296ef6432254815c9d15cdeebaa16b6d45106db4f3673bb5a6a00cc669c
+  languageName: node
+  linkType: hard
+
 "npm-run-path@npm:^2.0.0":
   version: 2.0.2
   resolution: "npm-run-path@npm:2.0.2"
@@ -15040,7 +15153,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:8.18.3, ws@npm:^8.18.0":
+"ws@npm:8.18.3, ws@npm:^8.18.0, ws@npm:^8.18.3":
   version: 8.18.3
   resolution: "ws@npm:8.18.3"
   peerDependencies:
