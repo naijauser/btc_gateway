@@ -3957,17 +3957,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sats-connect/core@npm:0.6.11":
-  version: 0.6.11
-  resolution: "@sats-connect/core@npm:0.6.11"
+"@sats-connect/core@npm:0.9.0":
+  version: 0.9.0
+  resolution: "@sats-connect/core@npm:0.9.0"
   dependencies:
-    axios: 1.8.4
-    bitcoin-address-validation: 2.2.3
+    axios: 1.12.0
+    bitcoin-address-validation: 3.0.0
     buffer: 6.0.3
     jsontokens: 4.0.1
   peerDependencies:
     valibot: 1.1.0
-  checksum: 459dc10e637fd8b84714e83a40f0c3077c4bf51fb4fec3d855605afbb1e9a5963e9857405f56ec30d2e04066077bd429ab12c2b07175cfbf16710873e2c0a7f2
+  checksum: c2cb8980dab4aa7995be25176dfc14c7c4e1a0a5ebeb0bf6a90f958971567ce18dfa0c729c8c37b041ae99a6ec9b7a3012dbd206f9aff9cb2a8dafc9b84cff4e
   languageName: node
   linkType: hard
 
@@ -4140,7 +4140,7 @@ __metadata:
     react-copy-to-clipboard: ^5.1.0
     react-dom: 19.0.0
     react-hot-toast: ^2.4.1
-    sats-connect: ^3.6.1
+    sats-connect: ^4.1.1
     shx: ^0.4.0
     starknet: 8.5.3
     tailwindcss: ^4
@@ -6323,14 +6323,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.8.4":
-  version: 1.8.4
-  resolution: "axios@npm:1.8.4"
+"axios@npm:1.12.0":
+  version: 1.12.0
+  resolution: "axios@npm:1.12.0"
   dependencies:
     follow-redirects: ^1.15.6
-    form-data: ^4.0.0
+    form-data: ^4.0.4
     proxy-from-env: ^1.1.0
-  checksum: e901dc1730bdcd769839b3d93ae6d6457a53d79b19a0eb623ebfea333441259ab51e63ca118baa47a5156567401466ac739f31087b4ee5e6770ab2e227484538
+  checksum: f2a109efea16711907ae86acc46434d52da28e889bf1d2fc2b66844e82c9908f6d96d988ad9043b37d4146abc182e67d61abd87367152bbbc1cd73afa3c5de71
   languageName: node
   linkType: hard
 
@@ -6408,10 +6408,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"base58-js@npm:^1.0.0":
-  version: 1.0.5
-  resolution: "base58-js@npm:1.0.5"
-  checksum: 46c1b39d3a70bca0a47d56069c74a25d547680afd0f28609c90f280f5d614f5de36db5df993fa334db24008a68ab784a72fcdaa13eb40078e03c8999915a1100
+"base58-js@npm:^3.0.2":
+  version: 3.0.3
+  resolution: "base58-js@npm:3.0.3"
+  checksum: 62bad85b233290102ec3acdd47f604a3f657e20c1cb8a2de960c645f5f34d4a15806ece82e0fec75af5c66ea020d37be3c9daa00b92652570b7c43c4ecf7224a
   languageName: node
   linkType: hard
 
@@ -6490,14 +6490,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bitcoin-address-validation@npm:2.2.3":
-  version: 2.2.3
-  resolution: "bitcoin-address-validation@npm:2.2.3"
+"bitcoin-address-validation@npm:3.0.0":
+  version: 3.0.0
+  resolution: "bitcoin-address-validation@npm:3.0.0"
   dependencies:
-    base58-js: ^1.0.0
+    base58-js: ^3.0.2
     bech32: ^2.0.0
     sha256-uint8array: ^0.10.3
-  checksum: 71ff67397275ef52a9e5e1f614fb57e9142d2a4d2f140c266051dc71f8b698930516133a2e1261def457ad4ecbe650535d4360367ece2d389001ec2a5a3d60f6
+  checksum: 3703f27501ea9c3bebad2c5a0448850a5c13f4d2df419ae72bfc458ff658283d29cc24e4cb34b99d5c6b5dec4bb58b3897456934213efd7b6f758bc87c81293b
   languageName: node
   linkType: hard
 
@@ -8700,7 +8700,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:^4.0.0":
+"form-data@npm:^4.0.4":
   version: 4.0.4
   resolution: "form-data@npm:4.0.4"
   dependencies:
@@ -12455,15 +12455,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sats-connect@npm:^3.6.1":
-  version: 3.6.1
-  resolution: "sats-connect@npm:3.6.1"
+"sats-connect@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "sats-connect@npm:4.1.1"
   dependencies:
-    "@sats-connect/core": 0.6.11
+    "@sats-connect/core": 0.9.0
     "@sats-connect/make-default-provider-config": 0.0.10
     "@sats-connect/ui": 0.0.7
     valibot: 1.1.0
-  checksum: 0f6098b0578d4b223729b6164019fafdd84e52859ff7532daf8cdfa6c287ddbfb38139db7cecc49a12d47b4b830777dea39840cef7dc15f61c3187c32d5e1ccc
+  checksum: a39e3d9c70fb59438a35ac10116e5482733364cb8358712a22376c44fed63ca0d4923ebbedf363e3d32451b799db6c11f5b68bd8d2d8d1843920f4d0433bff15
   languageName: node
   linkType: hard
 

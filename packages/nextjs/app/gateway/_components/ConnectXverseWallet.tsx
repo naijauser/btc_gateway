@@ -14,11 +14,7 @@ export function ConnectXverseWallet() {
     console.log("Connecting to Xverse Wallet...");
     try {
       const response = await request("wallet_connect", {
-        addresses: [
-          AddressPurpose.Payment,
-          AddressPurpose.Ordinals,
-          AddressPurpose.Stacks,
-        ],
+        addresses: [AddressPurpose.Ordinals, AddressPurpose.Payment, AddressPurpose.Stacks, AddressPurpose.Starknet, AddressPurpose.Spark]
       });
       console.log(response);
       if (response.status == "success") {
@@ -32,10 +28,14 @@ export function ConnectXverseWallet() {
         const stacksAddressItem = response.result.addresses.find(
           (address) => address.purpose === AddressPurpose.Stacks,
         );
+        const starknetAddressItem = response.result.addresses.find(
+          (address) => address.purpose === AddressPurpose.Starknet,
+        );
 
         console.log("paymentAddressItem: ", paymentAddressItem);
         console.log("ordinalsAddressItem: ", ordinalsAddressItem);
         console.log("stacksAddressItem: ", stacksAddressItem);
+        console.log("starknetAddressItem: ", starknetAddressItem);
       } else {
         if (response.error.code == RpcErrorCode.USER_REJECTION) {
           console.error("User rejected wallet connection.", response.error);
