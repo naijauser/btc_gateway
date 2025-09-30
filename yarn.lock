@@ -69,15 +69,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atomiqlabs/base@npm:^11.0.0":
-  version: 11.0.0
-  resolution: "@atomiqlabs/base@npm:11.0.0"
-  dependencies:
-    buffer: 6.0.3
-  checksum: aa85c1dcea3ef059d596dfbe1c796dda0b47625466d70b132d938ee9b7670721119a3740ee37a1aa5149ca4a666539d2ad86d93a05c91d809b35e7ee35e7b4a0
-  languageName: node
-  linkType: hard
-
 "@atomiqlabs/base@npm:^12.0.0":
   version: 12.0.0
   resolution: "@atomiqlabs/base@npm:12.0.0"
@@ -102,18 +93,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atomiqlabs/chain-starknet@npm:^5.1.5":
-  version: 5.1.5
-  resolution: "@atomiqlabs/chain-starknet@npm:5.1.5"
+"@atomiqlabs/chain-starknet@npm:^7.0.2":
+  version: 7.0.2
+  resolution: "@atomiqlabs/chain-starknet@npm:7.0.2"
   dependencies:
-    "@atomiqlabs/base": ^11.0.0
+    "@atomiqlabs/base": ^12.0.0
     "@noble/hashes": ^1.7.1
-    "@scure/btc-signer": 1.6.0
+    "@scure/btc-signer": ^1.6.0
     abi-wan-kanabi: 2.2.4
     buffer: 6.0.3
+    promise-queue-ts: ^1.0.0
   peerDependencies:
-    starknet: ^7.5.0
-  checksum: 5f84b54b677c2b42826dbe8b720e75a18933c1d0d22bd078816cb169c9046af2982f111a3ce40d3b69e7880db21e24c90fa5bd9f2b4b9d7b287c48ae1adfc4f9
+    starknet: ^8.5.0
+  checksum: 724e6ccf300c93c1db8166f655e463209b47ee44de0d17e51b77d5e037662f73e5bf169025d1e401a3a086a8f78256ba436dd1aca9a980e23bc68bb493d1be83
   languageName: node
   linkType: hard
 
@@ -2397,15 +2389,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/curves@npm:~1.8.1":
-  version: 1.8.2
-  resolution: "@noble/curves@npm:1.8.2"
-  dependencies:
-    "@noble/hashes": 1.7.2
-  checksum: f26fd77b4d78fe26dba2754cbcaddee5da23a711a0c9778ee57764eb0084282d97659d9b0a760718f42493adf68665dbffdca9d6213950f03f079d09c465c096
-  languageName: node
-  linkType: hard
-
 "@noble/hashes@npm:1.3.1":
   version: 1.3.1
   resolution: "@noble/hashes@npm:1.3.1"
@@ -2424,13 +2407,6 @@ __metadata:
   version: 1.6.0
   resolution: "@noble/hashes@npm:1.6.0"
   checksum: 07729b80108d2a9b862eb4e070d4f78ca7ee86b9a9c13a4f7c338ba47a15d4386dd283235da71f21ad515fa9f0b9429fc3da39d2f2b4a50e2442212d14cfd4a9
-  languageName: node
-  linkType: hard
-
-"@noble/hashes@npm:1.7.2, @noble/hashes@npm:~1.7.1":
-  version: 1.7.2
-  resolution: "@noble/hashes@npm:1.7.2"
-  checksum: f9e3c2e62c2850073f8d6ac30cc33b03a25cae859eb2209b33ae90ed3d1e003cb2a1ddacd2aacd6b7c98a5ad70795a234ccce04b0526657cd8020ce4ffdb491f
   languageName: node
   linkType: hard
 
@@ -4076,7 +4052,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@scure/base@npm:^1.2.4, @scure/base@npm:~1.2.2, @scure/base@npm:~1.2.5":
+"@scure/base@npm:^1.2.4, @scure/base@npm:~1.2.5":
   version: 1.2.6
   resolution: "@scure/base@npm:1.2.6"
   checksum: 1058cb26d5e4c1c46c9cc0ae0b67cc66d306733baf35d6ebdd8ddaba242b80c3807b726e3b48cb0411bb95ec10d37764969063ea62188f86ae9315df8ea6b325
@@ -4132,18 +4108,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@scure/btc-signer@npm:1.6.0":
-  version: 1.6.0
-  resolution: "@scure/btc-signer@npm:1.6.0"
-  dependencies:
-    "@noble/curves": ~1.8.1
-    "@noble/hashes": ~1.7.1
-    "@scure/base": ~1.2.2
-    micro-packed: ~0.7.2
-  checksum: 1d57572ace3d69a7eead345eab8dcf7aef96940d94edb964f2a06f7aeb08153f6fbdf6965b59117baac36a949a085789c89bfd50ed81fae4afdf70a171459134
-  languageName: node
-  linkType: hard
-
 "@scure/btc-signer@npm:^1.6.0":
   version: 1.8.1
   resolution: "@scure/btc-signer@npm:1.8.1"
@@ -4177,7 +4141,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@ss-2/nextjs@workspace:packages/nextjs"
   dependencies:
-    "@atomiqlabs/chain-starknet": ^5.1.5
+    "@atomiqlabs/chain-starknet": ^7.0.2
     "@atomiqlabs/sdk": ^7.0.1
     "@heroicons/react": ^2.1.3
     "@keplr-wallet/common": ^0.12.175
@@ -10418,6 +10382,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"linked-list-typescript@npm:^1.0.11":
+  version: 1.0.15
+  resolution: "linked-list-typescript@npm:1.0.15"
+  checksum: c88488f3b27ae2cb26b6aedd9cc4ffa4a07f3e97957f96c99e312ce825dc095b41f3d9e5a2e5f0ac324c13ae2053b3003589e4cac62cdeb4cc12be0dc10515aa
+  languageName: node
+  linkType: hard
+
 "loader-runner@npm:^4.2.0":
   version: 4.3.0
   resolution: "loader-runner@npm:4.3.0"
@@ -10660,7 +10631,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"micro-packed@npm:~0.7.2, micro-packed@npm:~0.7.3":
+"micro-packed@npm:~0.7.3":
   version: 0.7.3
   resolution: "micro-packed@npm:0.7.3"
   dependencies:
@@ -11893,6 +11864,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"promise-queue-ts@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "promise-queue-ts@npm:1.0.0"
+  dependencies:
+    queue-typescript: ^1.0.1
+  checksum: 2be29382d22a6f1b0b2c0bdeab5843c31775d331ab6400ff2254ca0cce1b0989cbf5370a79c00eadc764f8b0528378cbdb3f00d87fdb8b28ee6f1584497cea1f
+  languageName: node
+  linkType: hard
+
 "promise-retry@npm:^2.0.1":
   version: 2.0.1
   resolution: "promise-retry@npm:2.0.1"
@@ -11982,6 +11962,15 @@ __metadata:
   version: 1.2.3
   resolution: "queue-microtask@npm:1.2.3"
   checksum: b676f8c040cdc5b12723ad2f91414d267605b26419d5c821ff03befa817ddd10e238d22b25d604920340fd73efd8ba795465a0377c4adf45a4a41e4234e42dc4
+  languageName: node
+  linkType: hard
+
+"queue-typescript@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "queue-typescript@npm:1.0.1"
+  dependencies:
+    linked-list-typescript: ^1.0.11
+  checksum: 52db58a1e5b29927f94e97aaac1ae2951fa089571021250e728a209da8160c9471b86239cc7e277d6a85fd6a2bcb1f89cc2f8e0962816692e3cd98e86504eb3e
   languageName: node
   linkType: hard
 
