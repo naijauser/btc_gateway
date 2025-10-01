@@ -113,11 +113,25 @@ export function Swap() {
         });
 
         // Obtain the funded PSBT (input already added) - ready for signing
-        const { psbt, signInputs } = await swap.getFundedPsbt({
+        const { psbt } = await swap.getFundedPsbt({
           address: paymentAddressItem?.address as string,
           publicKey: paymentAddressItem?.publicKey as string, // Public key for P2WPKH or P2TR outputs
         });
-      
+
+        // for(let signIdx of signInputs) {
+        //   psbt.signIdx(..., signIdx); //Or pass it to external signer
+        // }
+
+        const bitcoinTxId = await swap.submitPsbt(psbt);
+        console.log("Bitcoin transaction sent: "+bitcoinTxId);
+
+        await swap.waitForBitcoinTransaction((txId, confirmations, targetConfirmations, transactionETAms) => {
+          if (txId == null) {
+            return;
+          }
+          
+          console.log("Swap transaction "+txId+" ("+confirmations+"/"+targetConfirmations+") ETA: "+(transactionETAms/1000)+"s");
+        }, 5, undefined);
       } else {
         if (response.error.code == RpcErrorCode.USER_REJECTION) {
           console.error("User rejected wallet connection.", response.error);
