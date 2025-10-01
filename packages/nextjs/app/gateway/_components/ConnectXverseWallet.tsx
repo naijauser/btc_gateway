@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { AddressPurpose, request, RpcErrorCode } from "sats-connect";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { Swap } from "./Swap";
+import { connect } from "@starknet-io/get-starknet";
 
 // This is a placeholder component for connecting to the Xverse wallet.
 // You will need to implement the actual connection logic using the Xverse SDK or API.
@@ -12,7 +13,10 @@ export function ConnectXverseWallet() {
 
   const connectWallet = async () => {
     console.log("Connecting to Xverse Wallet...");
+
     try {
+      const conn = await connect();
+
       const response = await request("wallet_connect", {
         addresses: [AddressPurpose.Ordinals, AddressPurpose.Payment, AddressPurpose.Stacks, AddressPurpose.Starknet, AddressPurpose.Spark]
       });

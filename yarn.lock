@@ -2177,6 +2177,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@module-federation/runtime@npm:^0.1.2":
+  version: 0.1.21
+  resolution: "@module-federation/runtime@npm:0.1.21"
+  dependencies:
+    "@module-federation/sdk": 0.1.21
+  checksum: ce4de8515b54f1cd07a3c7c4cbd35fea163294b9fb24be10827872f3ebb62cd5c289f3602efe4149d963282739f79b51947afa039ee6f36be7f66dea83d590fc
+  languageName: node
+  linkType: hard
+
+"@module-federation/sdk@npm:0.1.21":
+  version: 0.1.21
+  resolution: "@module-federation/sdk@npm:0.1.21"
+  checksum: 6856dcfe2ef5ae939890b82010aaad911fa6c4330a05f290ae054c316c9b532d3691456a1f9e176fe05f1df2d6f2d8c7e0c842ca5648a0fd7abf270e44ed9ecb
+  languageName: node
+  linkType: hard
+
 "@napi-rs/wasm-runtime@npm:^0.2.11, @napi-rs/wasm-runtime@npm:^0.2.12":
   version: 0.2.12
   resolution: "@napi-rs/wasm-runtime@npm:0.2.12"
@@ -4152,6 +4168,7 @@ __metadata:
     "@radix-ui/react-icons": 1.3.0
     "@radix-ui/themes": 2.0.3
     "@scaffold-stark/stark-burner": ^0.1.13
+    "@starknet-io/get-starknet": ^4.0.7
     "@starknet-io/types-js": ^0.8.4
     "@starknet-react/chains": ^5.0.1
     "@starknet-react/core": ^5.0.1
@@ -4235,6 +4252,27 @@ __metadata:
     eslint: ^8.0.0
   languageName: unknown
   linkType: soft
+
+"@starknet-io/get-starknet-core@npm:4.0.7":
+  version: 4.0.7
+  resolution: "@starknet-io/get-starknet-core@npm:4.0.7"
+  dependencies:
+    "@module-federation/runtime": ^0.1.2
+    "@starknet-io/types-js": ^0.7.7
+    async-mutex: ^0.5.0
+  checksum: 8e8556dc64496e3f9f71efb62d07d75717df0a1192cc1e167448079906efc86b3b79749988f2f1dac5eb9ad56140f1d2c5f958ab80782eec8cc88fdc2471a8cb
+  languageName: node
+  linkType: hard
+
+"@starknet-io/get-starknet@npm:^4.0.7":
+  version: 4.0.7
+  resolution: "@starknet-io/get-starknet@npm:4.0.7"
+  dependencies:
+    "@starknet-io/get-starknet-core": 4.0.7
+    bowser: ^2.11.0
+  checksum: 50b8773a96530bab871b32b21153d6e4b546915cc02b46d468048526b5e0434cee7a9aea5e9fcfd6fe8d36ceeb1270772d23b5825191e531246210e331bf87a1
+  languageName: node
+  linkType: hard
 
 "@starknet-io/starknet-types-08@npm:@starknet-io/types-js@~0.8.4, @starknet-io/types-js@npm:^0.8.4":
   version: 0.8.4
@@ -6326,6 +6364,15 @@ __metadata:
   version: 3.0.1
   resolution: "async-listen@npm:3.0.1"
   checksum: ff519d0bdd819b5d2eee209bd7a573b7f058690696b11aa45128fe4073bd33e2441da0d01134bd464b81def6f423a5de1c28ab35d10ba1a8d81a5374f3515b90
+  languageName: node
+  linkType: hard
+
+"async-mutex@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "async-mutex@npm:0.5.0"
+  dependencies:
+    tslib: ^2.4.0
+  checksum: be1587f4875f3bb15e34e9fcce82eac2966daef4432c8d0046e61947fb9a1b95405284601bc7ce4869319249bc07c75100880191db6af11d1498931ac2a2f9ea
   languageName: node
   linkType: hard
 
