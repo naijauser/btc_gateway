@@ -3,19 +3,29 @@ import React, { useState } from "react";
 import { AddressPurpose, request, RpcErrorCode } from "sats-connect";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { Swap } from "./Swap";
-import { connect } from "@starknet-io/get-starknet";
+import { connect, StarknetWindowObject } from "@starknet-io/get-starknet";
+import { useLocalStorage } from "usehooks-ts";
+import { StarknetSigner } from "@atomiqlabs/chain-starknet";
+import { Account } from "starknet";
 
 // This is a placeholder component for connecting to the Xverse wallet.
 // You will need to implement the actual connection logic using the Xverse SDK or API.
 
 export function ConnectXverseWallet() {
   const [walletConnected, setWalletConnected] = useState(false);
+  const [account, setWalletAccount] = useLocalStorage<Account | null>("walletAccount", null);
 
   const connectWallet = async () => {
     console.log("Connecting to Xverse Wallet...");
 
     try {
-      await connect();
+      let swo = await connect();
+      if (!swo) {
+        console.error("Xverse Wallet not found. Please install the Xverse Wallet extension.");
+        return;
+      }
+
+      // const wallet = new StarknetSigner(x);
 
       const response = await request("wallet_connect", {
         addresses: [AddressPurpose.Ordinals, AddressPurpose.Payment, AddressPurpose.Stacks, AddressPurpose.Starknet, AddressPurpose.Spark]

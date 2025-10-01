@@ -29,7 +29,7 @@
     "@radix-ui/themes": "2.0.3",
     "@scaffold-stark/stark-burner": "^0.1.13",
     "@starknet-io/get-starknet": "^4.0.7",
-    "@starknet-io/types-js": "^0.8.4",
+    "@starknet-io/types-js": "0.9.2",
     "@starknet-react/chains": "^5.0.1",
     "@starknet-react/core": "^5.0.1",
     "@starknet-react/typescript-config": "0.0.2",
