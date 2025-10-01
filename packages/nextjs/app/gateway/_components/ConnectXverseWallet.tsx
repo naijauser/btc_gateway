@@ -18,6 +18,12 @@ export function ConnectXverseWallet() {
   const connectWallet = async () => {
     console.log("Connecting to Xverse Wallet...");
 
+    let swo = await connect();
+    if (!swo) {
+      console.error("Xverse Wallet not found. Please install the Xverse Wallet extension.");
+      return;
+    }
+
     try {
       const response = await request("wallet_connect", {
         addresses: [AddressPurpose.Ordinals, AddressPurpose.Payment, AddressPurpose.Stacks, AddressPurpose.Starknet, AddressPurpose.Spark]
