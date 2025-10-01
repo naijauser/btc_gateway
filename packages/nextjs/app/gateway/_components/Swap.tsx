@@ -8,6 +8,7 @@ import {
 } from "@atomiqlabs/chain-starknet";
 import { BitcoinNetwork, FeeType, SpvFromBTCSwapState, SwapperFactory } from "@atomiqlabs/sdk";
 import { connect } from "@starknet-io/get-starknet";
+import { AddressPurpose, request, RpcErrorCode } from "sats-connect";
 import { Account } from "starknet";
 
 export function Swap() {
@@ -30,83 +31,101 @@ export function Swap() {
         return;
       }
 
-      const x = swo as any;
-      let destinationSmartchainWallet = x['selectedAddress'];
-      console.log('selectedAddress', x['selectedAddress']);
+      const response = await request("wallet_connect", {
+        addresses: [AddressPurpose.Ordinals, AddressPurpose.Payment, AddressPurpose.Stacks, AddressPurpose.Starknet, AddressPurpose.Spark]
+      });
 
-      const wallet = new StarknetSigner(swo as unknown as Account);
-      console.log("Wallet connected:", wallet);
+      console.log(response);
 
-      const swapper = Factory.newSwapper({
-        chains: {
-          STARKNET: {
-            rpcUrl: starknetRpcProvider,
+      if (response.status == "success") {
+        const paymentAddressItem = response.result.addresses.find(
+          (address) => address.purpose === AddressPurpose.Payment,
+        );
+
+        console.log("paymentAddressItem: ", paymentAddressItem);
+
+        const x = swo as any;
+        let destinationSmartchainWallet = x['selectedAddress'];
+        console.log('selectedAddress', x['selectedAddress']);
+
+        const wallet = new StarknetSigner(swo as unknown as Account);
+        console.log("Wallet connected:", wallet);
+
+        const swapper = Factory.newSwapper({
+          chains: {
+            STARKNET: {
+              rpcUrl: starknetRpcProvider,
+            },
           },
-        },
-        bitcoinNetwork: BitcoinNetwork.TESTNET4,
-      });
+          bitcoinNetwork: BitcoinNetwork.TESTNET4,
+        });
 
-      const swapLimits = swapper.getSwapLimits(
-        BTC_TOKEN,
-        STARKNET_TOKEN,
-      );
-      console.log(
-        "Swap Limits, input min: " +
-          swapLimits.input.min +
-          " input max: " +
-          swapLimits.input.max,
-      ); // Immediately available
-      console.log(
-        "Swap Limits, output min: " +
-          swapLimits.output.min +
-          " output max: " +
-          swapLimits.output.max,
-      ); // Available after swap rejected due to too low/high amounts
+        const swapLimits = swapper.getSwapLimits(
+          BTC_TOKEN,
+          STARKNET_TOKEN,
+        );
+        console.log(
+          "Swap Limits, input min: " +
+            swapLimits.input.min +
+            " input max: " +
+            swapLimits.input.max,
+        ); // Immediately available
+        console.log(
+          "Swap Limits, output min: " +
+            swapLimits.output.min +
+            " output max: " +
+            swapLimits.output.max,
+        ); // Available after swap rejected due to too low/high amounts
 
-      const _exactIn = true; //exactIn = true, so we specify the input amount
-      const _amount = 3000n; // 3000 sats (0.00003 BTC)
+        const _exactIn = true; //exactIn = true, so we specify the input amount
+        const _amount = 3000n; // 3000 sats (0.00003 BTC)
 
-      console.log("wallet address", wallet.account.address);
-      // Create swap quote
-      const swap = await swapper.swap(
-        BTC_TOKEN, // Swap from BTC
-        STARKNET_TOKEN, // Into STRK
-        _amount,
-        _exactIn,
-        undefined, // Source address for the swaps, not used for swaps from BTC
-        destinationSmartchainWallet // Destination address.
-      );
+        console.log("wallet address", wallet.account.address);
+        // Create swap quote
+        const swap = await swapper.swap(
+          BTC_TOKEN, // Swap from BTC
+          STARKNET_TOKEN, // Into STRK
+          _amount,
+          _exactIn,
+          undefined, // Source address for the swaps, not used for swaps from BTC
+          destinationSmartchainWallet // Destination address.
+        );
 
-      // Relevant data created about the swap
-      console.log("Swap created: " + swap.getId() + ":"); // Unique swap ID
-      console.log("   Input: " + swap.getInputWithoutFee()); // Input amount excluding fee
-      console.log("    Fees: " + swap.getFee().amountInSrcToken); // Fees paid on the output
-      for (let fee of swap.getFeeBreakdown()) {
-        console.log("     - " +  FeeType[fee.type] + ": " + fee.fee.amountInSrcToken); // Fees paid on the output
-      }
-      console.log("     Input with fees: " + swap.getInput()); // Total amount paid including fees
-      console.log("     Output: " + swap.getOutput()); // Output amount
-      console.log("     Quote expiry: " + swap.getQuoteExpiry()+ " (in " + (swap.getQuoteExpiry()-Date.now())/1000 + " seconds)"); // Quote expiry timestamp
-      console.log("     Price:"); // Pricing Information
-      console.log("       - swap: " + swap.getPriceInfo().swapPrice); // Price of the current swap (excluding fees)
-      console.log("       - market: " + swap.getPriceInfo().marketPrice); // Current Market price
-      console.log("       - difference: " + swap.getPriceInfo().difference); // Difference between swap price and the current market price
-      console.log("     Minimum bitcoin transaction fee rate " + swap.minimumBtcFeeRate + " sats/vB"); // Minimum fee rate of the bitcoin transaction
+        // Relevant data created about the swap
+        console.log("Swap created: " + swap.getId() + ":"); // Unique swap ID
+        console.log("   Input: " + swap.getInputWithoutFee()); // Input amount excluding fee
+        console.log("    Fees: " + swap.getFee().amountInSrcToken); // Fees paid on the output
+        for (let fee of swap.getFeeBreakdown()) {
+          console.log("     - " +  FeeType[fee.type] + ": " + fee.fee.amountInSrcToken); // Fees paid on the output
+        }
+        console.log("     Input with fees: " + swap.getInput()); // Total amount paid including fees
+        console.log("     Output: " + swap.getOutput()); // Output amount
+        console.log("     Quote expiry: " + swap.getQuoteExpiry()+ " (in " + (swap.getQuoteExpiry()-Date.now())/1000 + " seconds)"); // Quote expiry timestamp
+        console.log("     Price:"); // Pricing Information
+        console.log("       - swap: " + swap.getPriceInfo().swapPrice); // Price of the current swap (excluding fees)
+        console.log("       - market: " + swap.getPriceInfo().marketPrice); // Current Market price
+        console.log("       - difference: " + swap.getPriceInfo().difference); // Difference between swap price and the current market price
+        console.log("     Minimum bitcoin transaction fee rate " + swap.minimumBtcFeeRate + " sats/vB"); // Minimum fee rate of the bitcoin transaction
 
-      // Add a listener for swap state changes
-      swap.events.on("swapState", (swap) => {
-        console.log("Swap " + swap.getId() + " changed state to " + SpvFromBTCSwapState[swap.getState()]);
-      });
+        // Add a listener for swap state changes
+        swap.events.on("swapState", (swap) => {
+          console.log("Swap " + swap.getId() + " changed state to " + SpvFromBTCSwapState[swap.getState()]);
+        });
 
-
-
-      // Obtain the funded PSBT (input already added) - ready for signing
-      const { psbt, signInputs } = await swap.getFundedPsbt({
-        address: "",
-        publicKey: "", // Public key for P2WPKH or P2TR outputs
-      });
-
+        // Obtain the funded PSBT (input already added) - ready for signing
+        const { psbt, signInputs } = await swap.getFundedPsbt({
+          address: paymentAddressItem?.address as string,
+          publicKey: paymentAddressItem?.publicKey as string, // Public key for P2WPKH or P2TR outputs
+        });
       
+      } else {
+        if (response.error.code == RpcErrorCode.USER_REJECTION) {
+          console.error("User rejected wallet connection.", response.error);
+        } else {
+          console.error("Failed to connect to Xverse Wallet:", response.error);
+        }
+      }
+
 
     } catch (e) {
       console.log(e);
