@@ -4,8 +4,11 @@ import {
   RpcProviderWithRetries,
   StarknetInitializer,
   StarknetInitializerType,
+  StarknetSigner,
 } from "@atomiqlabs/chain-starknet";
-import { BitcoinNetwork, FeeType, fromHumanReadableString, SpvFromBTCSwapState, SwapperFactory } from "@atomiqlabs/sdk";
+import { BitcoinNetwork, FeeType, SpvFromBTCSwapState, SwapperFactory } from "@atomiqlabs/sdk";
+import { connect } from "@starknet-io/get-starknet";
+import { Account } from "starknet";
 
 export function Swap() {
   const swapTokens = async () => {
@@ -20,6 +23,15 @@ export function Swap() {
       const starknetRpcProvider = new RpcProviderWithRetries({
         nodeUrl,
       });
+
+      let swo = await connect();
+      if (!swo) {
+        console.error("Xverse Wallet not found. Please install the Xverse Wallet extension.");
+        return;
+      }
+
+      const wallet = new StarknetSigner(swo as unknown as Account);
+      console.log("Wallet connected:", wallet);
 
       const swapper = Factory.newSwapper({
         chains: {
@@ -57,7 +69,7 @@ export function Swap() {
         _amount,
         _exactIn,
         undefined, // Source address for the swaps, not used for swaps from BTC
-        "0x067b71c52c128cc94e466abd4b793fc02669bbd4336d9881a98c3aad83d3f710" // Destination address. TODO: Collect from user
+        wallet.getAddress() // Destination address.
       );
 
       // Relevant data created about the swap
@@ -81,11 +93,15 @@ export function Swap() {
         console.log("Swap " + swap.getId() + " changed state to " + SpvFromBTCSwapState[swap.getState()]);
       });
 
+
+
       // Obtain the funded PSBT (input already added) - ready for signing
       const { psbt, signInputs } = await swap.getFundedPsbt({
         address: "",
         publicKey: "", // Public key for P2WPKH or P2TR outputs
       });
+
+      
 
     } catch (e) {
       console.log(e);
