@@ -15,7 +15,7 @@ export function ConnectXverseWallet() {
     console.log("Connecting to Xverse Wallet...");
 
     try {
-      const conn = await connect();
+      await connect();
 
       const response = await request("wallet_connect", {
         addresses: [AddressPurpose.Ordinals, AddressPurpose.Payment, AddressPurpose.Stacks, AddressPurpose.Starknet, AddressPurpose.Spark]
