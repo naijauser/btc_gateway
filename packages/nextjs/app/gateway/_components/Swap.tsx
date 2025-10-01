@@ -30,6 +30,10 @@ export function Swap() {
         return;
       }
 
+      const x = swo as any;
+      let destinationSmartchainWallet = x['selectedAddress'];
+      console.log('selectedAddress', x['selectedAddress']);
+
       const wallet = new StarknetSigner(swo as unknown as Account);
       console.log("Wallet connected:", wallet);
 
@@ -62,6 +66,7 @@ export function Swap() {
       const _exactIn = true; //exactIn = true, so we specify the input amount
       const _amount = 3000n; // 3000 sats (0.00003 BTC)
 
+      console.log("wallet address", wallet.account.address);
       // Create swap quote
       const swap = await swapper.swap(
         BTC_TOKEN, // Swap from BTC
@@ -69,7 +74,7 @@ export function Swap() {
         _amount,
         _exactIn,
         undefined, // Source address for the swaps, not used for swaps from BTC
-        wallet.getAddress() // Destination address.
+        destinationSmartchainWallet // Destination address.
       );
 
       // Relevant data created about the swap
