@@ -23,6 +23,7 @@ export function ConnectXverseWallet() {
       console.error("Xverse Wallet not found. Please install the Xverse Wallet extension.");
       return;
     }
+    console.log("swo", swo);
 
     try {
       const response = await request("wallet_connect", {
