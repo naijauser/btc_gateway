@@ -8,8 +8,8 @@ import {
 } from "@atomiqlabs/chain-starknet";
 import { BitcoinNetwork, FeeType, SpvFromBTCSwapState, SwapperFactory } from "@atomiqlabs/sdk";
 import { connect } from "@starknet-io/get-starknet";
-import { AddressPurpose, request, RpcErrorCode } from "sats-connect";
-import { Account } from "starknet";
+import { AddressPurpose, request, RpcErrorCode, RpcResult, SignPsbtResult } from "sats-connect";
+import { Account, Signer } from "starknet";
 
 export function Swap() {
   const swapTokens = async () => {
@@ -113,14 +113,26 @@ export function Swap() {
         });
 
         // Obtain the funded PSBT (input already added) - ready for signing
-        const { psbt } = await swap.getFundedPsbt({
+        const { psbt, signInputs } = await swap.getFundedPsbt({
           address: paymentAddressItem?.address as string,
           publicKey: paymentAddressItem?.publicKey as string, // Public key for P2WPKH or P2TR outputs
         });
 
-        // for(let signIdx of signInputs) {
-        //   psbt.signIdx(..., signIdx); //Or pass it to external signer
-        // }
+        console.log('psbt', psbt);
+        console.log('signInputs', signInputs);
+
+        const psbtBase64 = Buffer.from(psbt.toPSBT()).toString('base64');
+        const res: RpcResult<'signPsbt'> = await request('signPsbt', {
+          psbt: psbtBase64,
+        });
+        const anyResponse = res as any;
+        const signResponse: SignPsbtResult = anyResponse['result'] as SignPsbtResult;
+
+        console.log('signResponse', signResponse);
+
+        for(let signIdx of signInputs) {
+          psbt.signIdx(new Signer(), signIdx); //Or pass it to external signer
+        }
 
         const bitcoinTxId = await swap.submitPsbt(psbt);
         console.log("Bitcoin transaction sent: "+bitcoinTxId);
