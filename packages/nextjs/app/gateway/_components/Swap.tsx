@@ -132,6 +132,7 @@ export function Swap() {
         console.log('signResponse', signResponse);
 
         const transaction = Transaction.fromPSBT(Buffer.from(signResponse.psbt, "base64"));
+        console.log('transaction', transaction)
         const bitcoinTxId = await swap.submitPsbt(transaction);
         console.log("Bitcoin transaction sent: "+bitcoinTxId);
 
