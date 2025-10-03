@@ -7,6 +7,7 @@ import {
   StarknetSigner,
 } from "@atomiqlabs/chain-starknet";
 import { BitcoinNetwork, FeeType, SpvFromBTCSwapState, SwapperFactory } from "@atomiqlabs/sdk";
+import { Transaction } from "@scure/btc-signer/transaction";
 import { connect } from "@starknet-io/get-starknet";
 import { AddressPurpose, request, RpcErrorCode, RpcResult, SignPsbtResult } from "sats-connect";
 import { Account, Signer } from "starknet";
@@ -130,11 +131,8 @@ export function Swap() {
 
         console.log('signResponse', signResponse);
 
-        for(let signIdx of signInputs) {
-          psbt.signIdx(new Signer(), signIdx); //Or pass it to external signer
-        }
-
-        const bitcoinTxId = await swap.submitPsbt(psbt);
+        const transaction = Transaction.fromPSBT(Buffer.from(signResponse.psbt, "base64"));
+        const bitcoinTxId = await swap.submitPsbt(transaction);
         console.log("Bitcoin transaction sent: "+bitcoinTxId);
 
         await swap.waitForBitcoinTransaction((txId, confirmations, targetConfirmations, transactionETAms) => {
