@@ -60,6 +60,7 @@ export function Swap() {
           },
           bitcoinNetwork: BitcoinNetwork.TESTNET4,
         });
+        await swapper.init();
 
         const swapLimits = swapper.getSwapLimits(
           BTC_TOKEN,
