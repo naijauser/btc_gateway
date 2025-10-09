@@ -2,18 +2,43 @@
 import React, { useState } from "react";
 import { AddressPurpose, request, RpcErrorCode } from "sats-connect";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
+import { Swap } from "./Swap";
+import { connect, StarknetWindowObject } from "@starknet-io/get-starknet";
+import { useLocalStorage } from "usehooks-ts";
+import { StarknetSigner } from "@atomiqlabs/chain-starknet";
+import { Account, WalletAccount } from "starknet";
 
 // This is a placeholder component for connecting to the Xverse wallet.
 // You will need to implement the actual connection logic using the Xverse SDK or API.
 
 export function ConnectXverseWallet() {
   const [walletConnected, setWalletConnected] = useState(false);
+  const [account, setWalletAccount] = useLocalStorage<Account | null>(
+    "walletAccount",
+    null,
+  );
 
   const connectWallet = async () => {
     console.log("Connecting to Xverse Wallet...");
+
+    let swo = await connect();
+    if (!swo) {
+      console.error(
+        "Xverse Wallet not found. Please install the Xverse Wallet extension.",
+      );
+      return;
+    }
+    console.log("swo", swo);
+
     try {
       const response = await request("wallet_connect", {
-        addresses: [AddressPurpose.Payment, AddressPurpose.Ordinals, AddressPurpose.Stacks],
+        addresses: [
+          AddressPurpose.Ordinals,
+          AddressPurpose.Payment,
+          AddressPurpose.Stacks,
+          AddressPurpose.Starknet,
+          AddressPurpose.Spark,
+        ],
       });
       console.log(response);
       if (response.status == "success") {
@@ -27,10 +52,14 @@ export function ConnectXverseWallet() {
         const stacksAddressItem = response.result.addresses.find(
           (address) => address.purpose === AddressPurpose.Stacks,
         );
+        const starknetAddressItem = response.result.addresses.find(
+          (address) => address.purpose === AddressPurpose.Starknet,
+        );
 
         console.log("paymentAddressItem: ", paymentAddressItem);
         console.log("ordinalsAddressItem: ", ordinalsAddressItem);
         console.log("stacksAddressItem: ", stacksAddressItem);
+        console.log("starknetAddressItem: ", starknetAddressItem);
       } else {
         if (response.error.code == RpcErrorCode.USER_REJECTION) {
           console.error("User rejected wallet connection.", response.error);
@@ -42,9 +71,9 @@ export function ConnectXverseWallet() {
       console.error("Error connecting to Xverse Wallet:", e);
     }
 
-    const balanceResponse = await request('getBalance', undefined);
+    const balanceResponse = await request("getBalance", undefined);
 
-    if (balanceResponse.status === 'success') {
+    if (balanceResponse.status === "success") {
       console.log(balanceResponse.result);
     } else {
       console.error(balanceResponse.error);
@@ -74,6 +103,7 @@ export function ConnectXverseWallet() {
           </div>
         )}
       </div>
+      <Swap />
     </div>
   );
 }
