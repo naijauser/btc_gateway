@@ -252,6 +252,7 @@ export function Swap() {
                 type="number"
                 // value={strkAmount}
                 // onChange={(e) => setStrkAmount(e.target.value)}
+                disabled
                 placeholder="0.00"
                 className="flex-1 bg-transparent focus:outline-none text-base-content placeholder-gray-400"
               />
