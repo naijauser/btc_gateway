@@ -14,6 +14,7 @@ import {
 } from "@atomiqlabs/sdk";
 import { Transaction } from "@scure/btc-signer/transaction";
 import { connect } from "@starknet-io/get-starknet";
+import { useState } from "react";
 import {
   AddressPurpose,
   request,
@@ -23,7 +24,33 @@ import {
 } from "sats-connect";
 import { Account, Signer } from "starknet";
 
+// Example mock swap data (replace with real data from your swap object)
+const mockSwap = {
+  getId: () => "swap_abc123",
+  getInputWithoutFee: () => "0.0098 BTC",
+  getFee: () => ({ amountInSrcToken: "0.0002 BTC" }),
+  getFeeBreakdown: () => [
+    { type: "Protocol", fee: { amountInSrcToken: "0.0001 BTC" } },
+    { type: "Network", fee: { amountInSrcToken: "0.0001 BTC" } },
+  ],
+  getInput: () => "0.01 BTC",
+  getOutput: () => "12.54 STRK",
+  getQuoteExpiry: () => Date.now() + 60_000, // 1 min expiry
+  getPriceInfo: () => ({
+    swapPrice: "1250",
+    marketPrice: "1262",
+    difference: "-0.95%",
+  }),
+  minimumBtcFeeRate: 6,
+};
+
 export function Swap() {
+  const [fromToken, setFromToken] = useState("BTC");
+  const [toToken, setToToken] = useState("STRK");
+  const [fromAmount, setFromAmount] = useState("");
+  const [toAmount, setToAmount] = useState("");
+  const [showDetails, setShowDetails] = useState(false);
+
   const swapTokens = async () => {
     try {
       const Factory = new SwapperFactory<[StarknetInitializerType]>([
@@ -263,8 +290,73 @@ export function Swap() {
             </div>
           </div>
 
+          {/* Swap details section */}
+          <div className="mt-6 border-t border-base-200 pt-4">
+            <button
+              className="flex items-center justify-between w-full text-left text-sm text-function font-semibold"
+              onClick={() => setShowDetails(!showDetails)}
+            >
+              <span>Swap Details</span>
+              {/* {showDetails ? <ChevronUp size={18} /> : <ChevronDown size={18} />} */}
+            </button>
+
+            {showDetails && (
+              <div className="mt-4 text-sm space-y-2 text-base-content bg-input rounded-xl p-4">
+                <p>
+                  <strong>ID:</strong> {mockSwap.getId()}
+                </p>
+                <p>
+                  <strong>Input (no fee):</strong>{" "}
+                  {mockSwap.getInputWithoutFee()}
+                </p>
+                <p>
+                  <strong>Fees:</strong> {mockSwap.getFee().amountInSrcToken}
+                </p>
+
+                <div className="pl-3">
+                  {mockSwap.getFeeBreakdown().map((fee, i) => (
+                    <p key={i}>
+                      - {FeeType[fee.type as keyof typeof FeeType] || fee.type}:{" "}
+                      {fee.fee.amountInSrcToken}
+                    </p>
+                  ))}
+                </div>
+
+                <p>
+                  <strong>Total Input (with fees):</strong>{" "}
+                  {mockSwap.getInput()}
+                </p>
+                <p>
+                  <strong>Output:</strong> {mockSwap.getOutput()}
+                </p>
+                <p>
+                  <strong>Quote Expiry:</strong>{" "}
+                  {new Date(mockSwap.getQuoteExpiry()).toLocaleTimeString()} (
+                  {Math.round((mockSwap.getQuoteExpiry() - Date.now()) / 1000)}s
+                  left)
+                </p>
+
+                <div className="pt-2">
+                  <p className="font-semibold text-function">Price Info:</p>
+                  <p>- Swap: {mockSwap.getPriceInfo().swapPrice}</p>
+                  <p>- Market: {mockSwap.getPriceInfo().marketPrice}</p>
+                  <p>- Difference: {mockSwap.getPriceInfo().difference}</p>
+                </div>
+
+                <p className="pt-2">
+                  <strong>Min BTC Fee Rate:</strong>{" "}
+                  {mockSwap.minimumBtcFeeRate} sats/vB
+                </p>
+              </div>
+            )}
+          </div>
+
           {/* Swap button */}
-          <button className="w-full btn bg-btn-wallet text-primary-content font-semibold border-none py-3 rounded-full hover:opacity-90 transition-all">
+          <button
+            onClick={() => swapTokens()}
+            disabled={false}
+            className="w-full btn bg-btn-wallet text-primary-content font-semibold border-none py-3 rounded-full hover:opacity-90 transition-all"
+          >
             Swap
           </button>
 
@@ -277,15 +369,6 @@ export function Swap() {
             <span className="text-network">Network: Bitcoin → Starknet</span>
           </div>
         </div>
-      </div>
-      <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
-        <button
-          onClick={() => swapTokens()}
-          disabled={false}
-          className="rounded-[18px] btn-sm  font-bold px-8 bg-btn-wallet py-3 cursor-pointer"
-        >
-          Swap BTC to STRK
-        </button>
       </div>
     </div>
   );
