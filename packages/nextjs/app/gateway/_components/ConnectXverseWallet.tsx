@@ -13,21 +13,32 @@ import { Account, WalletAccount } from "starknet";
 
 export function ConnectXverseWallet() {
   const [walletConnected, setWalletConnected] = useState(false);
-  const [account, setWalletAccount] = useLocalStorage<Account | null>("walletAccount", null);
+  const [account, setWalletAccount] = useLocalStorage<Account | null>(
+    "walletAccount",
+    null,
+  );
 
   const connectWallet = async () => {
     console.log("Connecting to Xverse Wallet...");
 
     let swo = await connect();
     if (!swo) {
-      console.error("Xverse Wallet not found. Please install the Xverse Wallet extension.");
+      console.error(
+        "Xverse Wallet not found. Please install the Xverse Wallet extension.",
+      );
       return;
     }
     console.log("swo", swo);
 
     try {
       const response = await request("wallet_connect", {
-        addresses: [AddressPurpose.Ordinals, AddressPurpose.Payment, AddressPurpose.Stacks, AddressPurpose.Starknet, AddressPurpose.Spark]
+        addresses: [
+          AddressPurpose.Ordinals,
+          AddressPurpose.Payment,
+          AddressPurpose.Stacks,
+          AddressPurpose.Starknet,
+          AddressPurpose.Spark,
+        ],
       });
       console.log(response);
       if (response.status == "success") {
