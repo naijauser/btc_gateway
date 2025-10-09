@@ -89,11 +89,9 @@ export function Swap() {
           (address) => address.purpose === AddressPurpose.Payment,
         );
 
-        console.log("paymentAddressItem: ", paymentAddressItem);
-
-        const x = swo as any;
-        let destinationSmartchainWallet = x["selectedAddress"];
-        console.log("selectedAddress", x["selectedAddress"]);
+        const starknetAddress = response.result.addresses.find(
+          (address) => address.purpose === AddressPurpose.Starknet,
+        );
 
         const wallet = new StarknetSigner(swo as unknown as Account);
         console.log("Wallet connected:", wallet);
@@ -133,7 +131,7 @@ export function Swap() {
           _amount,
           _exactIn,
           undefined, // Source address for the swaps, not used for swaps from BTC
-          destinationSmartchainWallet, // Destination address.
+          starknetAddress?.address as string, //TODO: Replace this with user collected address.
         );
 
         // Relevant data created about the swap
