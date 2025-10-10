@@ -181,16 +181,6 @@ export function Swap() {
             swap.minimumBtcFeeRate +
             " sats/vB",
         ); // Minimum fee rate of the bitcoin transaction
-
-        // Add a listener for swap state changes
-        swap.events.on("swapState", (swap) => {
-          console.log(
-            "Swap " +
-              swap.getId() +
-              " changed state to " +
-              SpvFromBTCSwapState[swap.getState()],
-          );
-        });
       } else {
         if (response.error.code == RpcErrorCode.USER_REJECTION) {
           console.error("User rejected wallet connection.", response.error);
@@ -205,6 +195,21 @@ export function Swap() {
 
   const swapTokens = async () => {
     try {
+      if (!swap) {
+        console.error("No swap object available.");
+        return;
+      }
+      
+      // Add a listener for swap state changes
+      swap.events.on("swapState", (swap) => {
+        console.log(
+          "Swap " +
+            swap.getId() +
+            " changed state to " +
+            SpvFromBTCSwapState[swap.getState()],
+        );
+      });
+
       // Obtain the funded PSBT (input already added) - ready for signing
       if (!swap) {
         console.error("No swap object available.");
