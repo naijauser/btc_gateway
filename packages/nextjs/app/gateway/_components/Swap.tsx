@@ -423,7 +423,6 @@ export function Swap() {
           <div className="mt-6 text-center text-sm text-neutral-content">
             <div className="flex justify-center items-center gap-2 mb-2">
               {/* <Wallet size={16} /> */}
-              <span>Connect wallet to continue</span>
             </div>
             <span className="text-network">Network: Bitcoin → Starknet</span>
           </div>
