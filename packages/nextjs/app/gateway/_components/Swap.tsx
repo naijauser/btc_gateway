@@ -68,6 +68,7 @@ export function Swap() {
   const [fromAmount, setFromAmount] = useState("");
   const [toAmount, setToAmount] = useState("");
   const [showDetails, setShowDetails] = useState(false);
+  const [swapDetailsGenerated, setSwapDetailsGenerated] = useState(false);
 
   const generateSwapDetails = async () => {
     try {
@@ -181,6 +182,8 @@ export function Swap() {
             swap.minimumBtcFeeRate +
             " sats/vB",
         ); // Minimum fee rate of the bitcoin transaction
+
+        setSwapDetailsGenerated(true);
       } else {
         if (response.error.code == RpcErrorCode.USER_REJECTION) {
           console.error("User rejected wallet connection.", response.error);
@@ -199,7 +202,7 @@ export function Swap() {
         console.error("No swap object available.");
         return;
       }
-      
+
       // Add a listener for swap state changes
       swap.events.on("swapState", (swap) => {
         console.log(
@@ -306,7 +309,7 @@ export function Swap() {
           </div>
 
           {/* To section */}
-          <div className="mb-6">
+          {swapDetailsGenerated && (<div className="mb-6">
             <label className="block text-sm mb-2">To</label>
             <div className="flex items-center bg-input rounded-xl px-3 py-2">
               <input
@@ -322,7 +325,7 @@ export function Swap() {
                 <span>STRK</span>
               </div>
             </div>
-          </div>
+          </div>)}
 
           {/* Swap details section */}
           <div className="mt-6 border-t border-base-200 pt-4">
