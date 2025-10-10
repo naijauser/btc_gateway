@@ -327,6 +327,19 @@ export function Swap() {
             </div>
           </div>)}
 
+          {swapDetailsGenerated && (<div className="mb-6">
+            <label className="block text-sm mb-2">Address</label>
+            <div className="flex items-center bg-input rounded-xl px-3 py-2">
+              <input
+                type="text"
+                // value={strkAmount}
+                // onChange={(e) => setStrkAmount(e.target.value)}
+                placeholder="0x123...abc"
+                className="flex-1 bg-transparent focus:outline-none text-base-content placeholder-gray-400"
+              />
+            </div>
+          </div>)}
+
           {/* Swap details section */}
           <div className="mt-6 border-t border-base-200 pt-4">
             <button
