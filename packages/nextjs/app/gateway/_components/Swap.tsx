@@ -301,44 +301,41 @@ export function Swap() {
             </div>
           </div>
 
-          {/* Arrow separator */}
-          <div className="flex justify-center my-4">
-            <div className="bg-function p-2 rounded-full cursor-pointer hover:scale-110 transition-transform">
-              {/* <ArrowDownUp size={18} /> */}
-            </div>
-          </div>
-
           {/* To section */}
-          {swapDetailsGenerated && (<div className="mb-6">
-            <label className="block text-sm mb-2">To</label>
-            <div className="flex items-center bg-input rounded-xl px-3 py-2">
-              <input
-                type="number"
-                // value={strkAmount}
-                // onChange={(e) => setStrkAmount(e.target.value)}
-                disabled
-                placeholder="0.00"
-                className="flex-1 bg-transparent focus:outline-none text-base-content placeholder-gray-400"
-              />
-              <div className="flex items-center gap-2 font-semibold">
-                <img src="/strk.svg" alt="STRK" className="w-5 h-5" />
-                <span>STRK</span>
+          {swapDetailsGenerated && (
+            <div className="mb-6">
+              <label className="block text-sm mb-2">To</label>
+              <div className="flex items-center bg-input rounded-xl px-3 py-2">
+                <input
+                  type="number"
+                  // value={strkAmount}
+                  // onChange={(e) => setStrkAmount(e.target.value)}
+                  disabled
+                  placeholder="0.00"
+                  className="flex-1 bg-transparent focus:outline-none text-base-content placeholder-gray-400"
+                />
+                <div className="flex items-center gap-2 font-semibold">
+                  <img src="/strk.svg" alt="STRK" className="w-5 h-5" />
+                  <span>STRK</span>
+                </div>
               </div>
             </div>
-          </div>)}
+          )}
 
-          {swapDetailsGenerated && (<div className="mb-6">
-            <label className="block text-sm mb-2">Address</label>
-            <div className="flex items-center bg-input rounded-xl px-3 py-2">
-              <input
-                type="text"
-                // value={strkAmount}
-                // onChange={(e) => setStrkAmount(e.target.value)}
-                placeholder="0x123...abc"
-                className="flex-1 bg-transparent focus:outline-none text-base-content placeholder-gray-400"
-              />
+          {swapDetailsGenerated && (
+            <div className="mb-6">
+              <label className="block text-sm mb-2">Address</label>
+              <div className="flex items-center bg-input rounded-xl px-3 py-2">
+                <input
+                  type="text"
+                  // value={strkAmount}
+                  // onChange={(e) => setStrkAmount(e.target.value)}
+                  placeholder="0x123...abc"
+                  className="flex-1 bg-transparent focus:outline-none text-base-content placeholder-gray-400"
+                />
+              </div>
             </div>
-          </div>)}
+          )}
 
           {/* Swap details section */}
           <div className="mt-6 border-t border-base-200 pt-4">
@@ -402,13 +399,25 @@ export function Swap() {
           </div>
 
           {/* Swap button */}
-          {!swapDetailsGenerated && (<button
-            onClick={() => generateSwapDetails()}
-            disabled={false}
-            className="w-full btn bg-btn-wallet text-primary-content font-semibold border-none py-3 rounded-full hover:opacity-90 transition-all"
-          >
-            Generate Swap Details
-          </button>)}
+          {!swapDetailsGenerated && (
+            <button
+              onClick={() => generateSwapDetails()}
+              disabled={false}
+              className="w-full btn bg-btn-wallet text-primary-content font-semibold border-none py-3 rounded-full hover:opacity-90 transition-all"
+            >
+              Generate Swap Details
+            </button>
+          )}
+
+          {swapDetailsGenerated && (
+            <button
+              onClick={() => swapTokens()}
+              disabled={false}
+              className="w-full btn bg-btn-wallet text-primary-content font-semibold border-none py-3 rounded-full hover:opacity-90 transition-all"
+            >
+              Swap
+            </button>
+          )}
 
           {/* Wallet/network info */}
           <div className="mt-6 text-center text-sm text-neutral-content">
