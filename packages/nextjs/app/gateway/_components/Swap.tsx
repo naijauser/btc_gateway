@@ -402,13 +402,13 @@ export function Swap() {
           </div>
 
           {/* Swap button */}
-          <button
+          {!swapDetailsGenerated && (<button
             onClick={() => generateSwapDetails()}
             disabled={false}
             className="w-full btn bg-btn-wallet text-primary-content font-semibold border-none py-3 rounded-full hover:opacity-90 transition-all"
           >
             Generate Swap Details
-          </button>
+          </button>)}
 
           {/* Wallet/network info */}
           <div className="mt-6 text-center text-sm text-neutral-content">
