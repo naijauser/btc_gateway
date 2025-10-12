@@ -28,26 +28,6 @@ import {
 } from "sats-connect";
 import { Account, Signer } from "starknet";
 
-// Example mock swap data (replace with real data from your swap object)
-const mockSwap = {
-  getId: () => "swap_abc123",
-  getInputWithoutFee: () => "0.0098 BTC",
-  getFee: () => ({ amountInSrcToken: "0.0002 BTC" }),
-  getFeeBreakdown: () => [
-    { type: "Protocol", fee: { amountInSrcToken: "0.0001 BTC" } },
-    { type: "Network", fee: { amountInSrcToken: "0.0001 BTC" } },
-  ],
-  getInput: () => "0.01 BTC",
-  getOutput: () => "12.54 STRK",
-  getQuoteExpiry: () => Date.now() + 60_000, // 1 min expiry
-  getPriceInfo: () => ({
-    swapPrice: "1250",
-    marketPrice: "1262",
-    difference: "-0.95%",
-  }),
-  minimumBtcFeeRate: 6,
-};
-
 export function Swap() {
   const [bitcoinAddress, setBitcoinAddress] = useState("");
   let [swap, setSwapObject] = useState<
@@ -68,11 +48,14 @@ export function Swap() {
   const [totalFees, setTotalFees] = useState(0);
   const [swapFees, setSwapFees] = useState(0);
   const [networkOutputFee, setNetworkOutputFees] = useState(0);
+  const [totalInputWithFee, setTotalInputWithFee] = useState(0);
+  const [output, setOutput] = useState(0);
+  const [quoteExpiryInSeconds, setQuoteExpiryInDeconds] = useState(0);
+  const [priceOfSwapExcludingFees, setPriceOfSwapExcludingFees] = useState(0);
+  const [currentMarketPrice, setCurrentMarketPrice] = useState(0);
+  const [priceDifference, setPriceDifference] = useState(0);
+  const [minimumBtcFeeRate, setMinimumBtcFeeRate] = useState(0);
 
-  const [fromToken, setFromToken] = useState("BTC");
-  const [toToken, setToToken] = useState("STRK");
-  const [fromAmount, setFromAmount] = useState("");
-  const [toAmount, setToAmount] = useState("");
   const [showDetails, setShowDetails] = useState(false);
   const [swapDetailsGenerated, setSwapDetailsGenerated] = useState(false);
 
@@ -190,32 +173,38 @@ export function Swap() {
           }
         }
 
-        const totalInputWithFee = swap.getInput();
+        const totalInputWithFee = swap.getInput()._amount;
         console.log("     Input with fees: " + totalInputWithFee); // Total amount paid including fees
+        setTotalInputWithFee(totalInputWithFee);
 
-        const output = swap.getOutput();
-        console.log("     Output: " + output); // Output amount
+        const output = swap.getOutput()._amount;
+        console.log("     Output: " + output + " STRK"); // Output amount
+        setOutput(output);
 
-        const getQuoteExpiryInSeconds =
+        const quoteExpiryInSeconds =
           (swap.getQuoteExpiry() - Date.now()) / 1000;
         console.log(
           "     Quote expiry: " +
             swap.getQuoteExpiry() +
             " (in " +
-            getQuoteExpiryInSeconds +
+            quoteExpiryInSeconds +
             " seconds)",
         ); // Quote expiry timestamp
+        setQuoteExpiryInDeconds(quoteExpiryInSeconds);
 
         console.log("     Price:"); // Pricing Information
 
         const priceOfSwapExcludingFees = swap.getPriceInfo().swapPrice;
         console.log("       - swap: " + priceOfSwapExcludingFees); // Price of the current swap (excluding fees)
+        setPriceOfSwapExcludingFees(priceOfSwapExcludingFees);
 
         const currentMarketPrice = swap.getPriceInfo().marketPrice;
         console.log("       - market: " + currentMarketPrice); // Current Market price
+        setCurrentMarketPrice(currentMarketPrice);
 
         const priceDifference = swap.getPriceInfo().difference.decimal;
         console.log("       - difference: " + priceDifference); // Difference between swap price and the current market price
+        setPriceDifference(priceDifference);
 
         const minimumBtcFeeRate = swap.minimumBtcFeeRate;
         console.log(
@@ -223,6 +212,7 @@ export function Swap() {
             minimumBtcFeeRate +
             " sats/vB",
         ); // Minimum fee rate of the bitcoin transaction
+        setMinimumBtcFeeRate(minimumBtcFeeRate);
 
         setSwapDetailsGenerated(true);
       } else {
@@ -407,28 +397,26 @@ export function Swap() {
 
                 <p>
                   <strong>Total Input (with fees):</strong>{" "}
-                  {mockSwap.getInput()}
+                  {totalInputWithFee}
                 </p>
                 <p>
-                  <strong>Output:</strong> {mockSwap.getOutput()}
+                  <strong>Output:</strong> {output} STRK
                 </p>
                 <p>
                   <strong>Quote Expiry:</strong>{" "}
-                  {new Date(mockSwap.getQuoteExpiry()).toLocaleTimeString()} (
-                  {Math.round((mockSwap.getQuoteExpiry() - Date.now()) / 1000)}s
-                  left)
+                  {quoteExpiryInSeconds.toFixed(0)} seconds
                 </p>
 
                 <div className="pt-2">
                   <p className="font-semibold text-function">Price Info:</p>
-                  <p>- Swap: {mockSwap.getPriceInfo().swapPrice}</p>
-                  <p>- Market: {mockSwap.getPriceInfo().marketPrice}</p>
-                  <p>- Difference: {mockSwap.getPriceInfo().difference}</p>
+                  <p>- Swap: {priceOfSwapExcludingFees}</p>
+                  <p>- Market: {currentMarketPrice}</p>
+                  <p>- Difference: {priceDifference}</p>
                 </div>
 
                 <p className="pt-2">
                   <strong>Min BTC Fee Rate:</strong>{" "}
-                  {mockSwap.minimumBtcFeeRate} sats/vB
+                  {minimumBtcFeeRate} sats/vB
                 </p>
               </div>
             )}
