@@ -156,30 +156,60 @@ export function Swap() {
         setSwapObject(swap);
 
         // Relevant data created about the swap
-        console.log("Swap created: " + swap.getId() + ":"); // Unique swap ID
-        console.log("   Input: " + swap.getInputWithoutFee()); // Input amount excluding fee
-        console.log("    Fees: " + swap.getFee().amountInSrcToken); // Fees paid on the output
+        const swapId = swap.getId();
+        console.log("Swap created: " + swapId + ":"); // Unique swap ID
+
+        const inputTokenWithoutFee = swap.getInputWithoutFee();
+        console.log("   Input: " + inputTokenWithoutFee); // Input amount excluding fee
+
+        const totalFees = swap.getFee().amountInSrcToken;
+        console.log("    Fees: " + totalFees); // Fees paid on the output
+
+        let swapFee = 0;
+        let networkOutputFee = 0;
         for (let fee of swap.getFeeBreakdown()) {
-          console.log(
-            "     - " + FeeType[fee.type] + ": " + fee.fee.amountInSrcToken,
-          ); // Fees paid on the output
+          if (fee.type === FeeType.SWAP) {
+            swapFee = fee.fee.amountInSrcToken._amount;
+            console.log("     - " + FeeType[fee.type] + ": " + swapFee); // Fees paid on the output
+          } else if (fee.type === FeeType.NETWORK_OUTPUT) {
+            networkOutputFee += fee.fee.amountInSrcToken._amount;
+            console.log(
+              "     - " + FeeType[fee.type] + ": " + networkOutputFee,
+            ); // Fees paid on the output
+          }
         }
-        console.log("     Input with fees: " + swap.getInput()); // Total amount paid including fees
-        console.log("     Output: " + swap.getOutput()); // Output amount
+
+        const totalInputWithFee = swap.getInput();
+        console.log("     Input with fees: " + totalInputWithFee); // Total amount paid including fees
+
+        const output = swap.getOutput();
+        console.log("     Output: " + output); // Output amount
+
+        const getQuoteExpiryInSeconds =
+          (swap.getQuoteExpiry() - Date.now()) / 1000;
         console.log(
           "     Quote expiry: " +
             swap.getQuoteExpiry() +
             " (in " +
-            (swap.getQuoteExpiry() - Date.now()) / 1000 +
+            getQuoteExpiryInSeconds +
             " seconds)",
         ); // Quote expiry timestamp
+
         console.log("     Price:"); // Pricing Information
-        console.log("       - swap: " + swap.getPriceInfo().swapPrice); // Price of the current swap (excluding fees)
-        console.log("       - market: " + swap.getPriceInfo().marketPrice); // Current Market price
-        console.log("       - difference: " + swap.getPriceInfo().difference); // Difference between swap price and the current market price
+
+        const priceOfSwapExcludingFees = swap.getPriceInfo().swapPrice;
+        console.log("       - swap: " + priceOfSwapExcludingFees); // Price of the current swap (excluding fees)
+
+        const currentMarketPrice = swap.getPriceInfo().marketPrice;
+        console.log("       - market: " + currentMarketPrice); // Current Market price
+
+        const priceDifference = swap.getPriceInfo().difference;
+        console.log("       - difference: " + priceDifference); // Difference between swap price and the current market price
+
+        const minimumBtcFeeRate = swap.minimumBtcFeeRate;
         console.log(
           "     Minimum bitcoin transaction fee rate " +
-            swap.minimumBtcFeeRate +
+            minimumBtcFeeRate +
             " sats/vB",
         ); // Minimum fee rate of the bitcoin transaction
 
