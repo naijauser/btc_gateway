@@ -27,6 +27,7 @@ import {
   SignPsbtResult,
 } from "sats-connect";
 import { Account, Signer } from "starknet";
+import { Wallet, ChevronDown, ChevronUp } from "lucide-react";
 
 export function Swap() {
   const [bitcoinAddress, setBitcoinAddress] = useState("");
@@ -400,7 +401,7 @@ export function Swap() {
               onClick={() => setShowDetails(!showDetails)}
             >
               <span>Swap Details</span>
-              {/* {showDetails ? <ChevronUp size={18} /> : <ChevronDown size={18} />} */}
+              {showDetails ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
             </button>
 
             {showDetails && (
@@ -469,7 +470,7 @@ export function Swap() {
           {/* Wallet/network info */}
           <div className="mt-6 text-center text-sm text-neutral-content">
             <div className="flex justify-center items-center gap-2 mb-2">
-              {/* <Wallet size={16} /> */}
+              <Wallet size={16} />
             </div>
             <span className="text-network">Network: Bitcoin → Starknet</span>
           </div>

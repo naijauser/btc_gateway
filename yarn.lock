@@ -10571,6 +10571,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lucide-react@npm:^0.545.0":
+  version: 0.545.0
+  resolution: "lucide-react@npm:0.545.0"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 0f9312903252668edaae3f22b85ebd88047d8c8c2bcf1cd57e2b97c3e662fa6405254d772cafcd439a5acc7674a4238aabebedce7de94b7613702859403c5d63
+  languageName: node
+  linkType: hard
+
 "lz-string@npm:^1.5.0":
   version: 1.5.0
   resolution: "lz-string@npm:1.5.0"
@@ -13098,6 +13107,7 @@ __metadata:
   dependencies:
     daisyui: ^4.7.3
     husky: ^9.0.11
+    lucide-react: ^0.545.0
     pinst: ^3.0.0
     postcss: ^8.4.38
     prettier: ^3.2.5

@@ -30,6 +30,7 @@
     "verify": "yarn workspace @ss-2/snfoundry verify"
   },
   "dependencies": {
+    "lucide-react": "^0.545.0",
     "postcss": "^8.4.38"
   },
   "devDependencies": {
