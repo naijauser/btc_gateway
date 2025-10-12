@@ -66,6 +66,8 @@ export function Swap() {
   const [swapId, setswapId] = useState("");
   const [inputTokenWithoutFee, setInputTokenWithoutFee] = useState(0);
   const [totalFees, setTotalFees] = useState(0);
+  const [swapFees, setSwapFees] = useState(0);
+  const [networkOutputFee, setNetworkOutputFees] = useState(0);
 
   const [fromToken, setFromToken] = useState("BTC");
   const [toToken, setToToken] = useState("STRK");
@@ -178,11 +180,13 @@ export function Swap() {
           if (fee.type === FeeType.SWAP) {
             swapFee = fee.fee.amountInSrcToken._amount;
             console.log("     - " + FeeType[fee.type] + ": " + swapFee); // Fees paid on the output
+            setSwapFees(swapFee);
           } else if (fee.type === FeeType.NETWORK_OUTPUT) {
             networkOutputFee += fee.fee.amountInSrcToken._amount;
             console.log(
               "     - " + FeeType[fee.type] + ": " + networkOutputFee,
             ); // Fees paid on the output
+            setNetworkOutputFees(networkOutputFee);
           }
         }
 
@@ -397,12 +401,8 @@ export function Swap() {
                 </p>
 
                 <div className="pl-3">
-                  {mockSwap.getFeeBreakdown().map((fee, i) => (
-                    <p key={i}>
-                      - {FeeType[fee.type as keyof typeof FeeType] || fee.type}:{" "}
-                      {fee.fee.amountInSrcToken}
-                    </p>
-                  ))}
+                  <p>- Swap: {swapFees}</p>
+                  <p>- Network: {networkOutputFee}</p>
                 </div>
 
                 <p>
