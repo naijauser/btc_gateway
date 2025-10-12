@@ -65,6 +65,7 @@ export function Swap() {
     if (!btcAmt) return;
     const btc = parseFloat(btcAmt.toString());
     setUsdValue(btc * 111179.6); // Example conversion rate
+    setSwapDetailsGenerated(false);
   }, [btcAmt]);
 
   const handleBTCInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
