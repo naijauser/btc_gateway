@@ -151,14 +151,14 @@ export function Swap() {
         ); // Available after swap rejected due to too low/high amounts
 
         const _exactIn = true; //exactIn = true, so we specify the input amount
-        const _amount = 3000n; // 3000 sats (0.00003 BTC)
+        // const _amount = 3000n; // 3000 sats (0.00003 BTC)
 
         console.log("wallet address", wallet.account.address);
         // Create swap quote
         swap = await swapper.swap(
           BTC_TOKEN, // Swap from BTC
           STARKNET_TOKEN, // Into STRK
-          _amount,
+          bitcoinAmountInSats,
           _exactIn,
           undefined, // Source address for the swaps, not used for swaps from BTC
           starknetAddress?.address as string, //TODO: Replace this with user collected address.
@@ -339,7 +339,7 @@ export function Swap() {
           <div className="mb-4">
             <label className="block text-sm mb-2">From</label>
             {/* Optional live preview */}
-            <div className="ml-4 text-sm text-gray-500">
+            <div className="text-sm text-gray-500">
               sats: <code>{bitcoinAmountInSats.toString()}</code>
             </div>
             <div className="flex items-center bg-input rounded-xl px-3 py-2">
@@ -364,7 +364,7 @@ export function Swap() {
               <div className="flex items-center bg-input rounded-xl px-3 py-2">
                 <input
                   type="number"
-                  // value={strkAmount}
+                  value={output}
                   // onChange={(e) => setStrkAmount(e.target.value)}
                   disabled
                   placeholder="0.00"
