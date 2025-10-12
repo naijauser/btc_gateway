@@ -394,7 +394,7 @@ export function Swap() {
           )}
 
           {/* Swap details section */}
-          <div className="mt-6 border-t border-base-200 pt-4">
+          <div className="mt-6 mb-3 border-t border-base-200 pt-4">
             <button
               className="flex items-center justify-between w-full text-left text-sm text-function font-semibold"
               onClick={() => setShowDetails(!showDetails)}
