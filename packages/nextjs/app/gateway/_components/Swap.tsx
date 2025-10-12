@@ -55,6 +55,27 @@ export function Swap() {
   const [currentMarketPrice, setCurrentMarketPrice] = useState(0);
   const [priceDifference, setPriceDifference] = useState(0);
   const [minimumBtcFeeRate, setMinimumBtcFeeRate] = useState(0);
+  const [bitcoinAmountInSats, setBitcoinAmountInSats] = useState<bigint>(0n);
+
+  const handleBTCInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    console.log("Input value:", value);
+
+    // Handle empty input
+    if (value === "") {
+      setBitcoinAmountInSats(0n);
+      return;
+    }
+
+    try {
+      const sats = BigInt(Math.round(parseFloat(value) * 100_000_000));
+      setBitcoinAmountInSats(sats);
+    } catch {
+      console.warn("Invalid bigint input:", value);
+      // Optionally keep old value or reset
+    }
+  };
 
   const [showDetails, setShowDetails] = useState(false);
   const [swapDetailsGenerated, setSwapDetailsGenerated] = useState(false);
@@ -317,11 +338,15 @@ export function Swap() {
           {/* From section */}
           <div className="mb-4">
             <label className="block text-sm mb-2">From</label>
+            {/* Optional live preview */}
+            <div className="ml-4 text-sm text-gray-500">
+              sats: <code>{bitcoinAmountInSats.toString()}</code>
+            </div>
             <div className="flex items-center bg-input rounded-xl px-3 py-2">
               <input
                 type="number"
                 // value={btcAmount}
-                // onChange={(e) => setBtcAmount(e.target.value)}
+                onChange={handleBTCInputChange}
                 placeholder="0.00"
                 className="flex-1 bg-transparent focus:outline-none text-base-content placeholder-gray-400"
               />
@@ -396,8 +421,7 @@ export function Swap() {
                 </div>
 
                 <p>
-                  <strong>Total Input (with fees):</strong>{" "}
-                  {totalInputWithFee}
+                  <strong>Total Input (with fees):</strong> {totalInputWithFee}
                 </p>
                 <p>
                   <strong>Output:</strong> {output} STRK
@@ -415,8 +439,7 @@ export function Swap() {
                 </div>
 
                 <p className="pt-2">
-                  <strong>Min BTC Fee Rate:</strong>{" "}
-                  {minimumBtcFeeRate} sats/vB
+                  <strong>Min BTC Fee Rate:</strong> {minimumBtcFeeRate} sats/vB
                 </p>
               </div>
             )}
