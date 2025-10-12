@@ -17,7 +17,7 @@ import {
 import { Transaction } from "@scure/btc-signer/transaction";
 import { connect } from "@starknet-io/get-starknet";
 import { set } from "nprogress";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AddressPurpose,
   AddressType,
@@ -56,22 +56,30 @@ export function Swap() {
   const [currentMarketPrice, setCurrentMarketPrice] = useState(0);
   const [priceDifference, setPriceDifference] = useState(0);
   const [minimumBtcFeeRate, setMinimumBtcFeeRate] = useState(0);
-  const [bitcoinAmountInSats, setBitcoinAmountInSats] = useState<bigint>(0n);
+  const [btcAmt, setBtcAmt] = useState<string>("");
+  const [btcAmtInSats, setbtcAmtInSats] = useState<bigint>(0n);
+  const [usdValue, setUsdValue] = useState<number>(0);
+
+  // Update USD equivalent whenever BTC value changes
+  useEffect(() => {
+    if (!btcAmt) return;
+    const btc = parseFloat(btcAmt.toString());
+    setUsdValue(btc * 111179.6); // Example conversion rate
+  }, [btcAmt]);
 
   const handleBTCInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-
-    console.log("Input value:", value);
+    setBtcAmt(value);
 
     // Handle empty input
     if (value === "") {
-      setBitcoinAmountInSats(0n);
+      setbtcAmtInSats(0n);
       return;
     }
 
     try {
       const sats = BigInt(Math.round(parseFloat(value) * 100_000_000));
-      setBitcoinAmountInSats(sats);
+      setbtcAmtInSats(sats);
     } catch {
       console.warn("Invalid bigint input:", value);
       // Optionally keep old value or reset
@@ -159,7 +167,7 @@ export function Swap() {
         swap = await swapper.swap(
           BTC_TOKEN, // Swap from BTC
           STARKNET_TOKEN, // Into STRK
-          bitcoinAmountInSats,
+          btcAmtInSats,
           _exactIn,
           undefined, // Source address for the swaps, not used for swaps from BTC
           starknetAddress?.address as string, //TODO: Replace this with user collected address.
@@ -341,12 +349,13 @@ export function Swap() {
             <label className="block text-sm mb-2">From</label>
             {/* Optional live preview */}
             <div className="text-sm text-gray-500">
-              sats: <code>{bitcoinAmountInSats.toString()}</code>
+              sats: <code>{btcAmtInSats.toString()}</code>, USD:{" "}
+              <code>{usdValue.toFixed(2)}</code>
             </div>
             <div className="flex items-center bg-input rounded-xl px-3 py-2">
               <input
                 type="number"
-                // value={btcAmount}
+                value={btcAmt}
                 onChange={handleBTCInputChange}
                 placeholder="0.00"
                 className="flex-1 bg-transparent focus:outline-none text-base-content placeholder-gray-400"
