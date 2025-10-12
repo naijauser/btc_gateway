@@ -63,6 +63,10 @@ export function Swap() {
       }
     | undefined
   >(undefined);
+  const [swapId, setswapId] = useState("");
+  const [inputTokenWithoutFee, setInputTokenWithoutFee] = useState(0);
+  const [totalFees, setTotalFees] = useState(0);
+
   const [fromToken, setFromToken] = useState("BTC");
   const [toToken, setToToken] = useState("STRK");
   const [fromAmount, setFromAmount] = useState("");
@@ -158,12 +162,15 @@ export function Swap() {
         // Relevant data created about the swap
         const swapId = swap.getId();
         console.log("Swap created: " + swapId + ":"); // Unique swap ID
+        setswapId(swapId);
 
-        const inputTokenWithoutFee = swap.getInputWithoutFee();
+        const inputTokenWithoutFee = swap.getInputWithoutFee()._amount;
         console.log("   Input: " + inputTokenWithoutFee); // Input amount excluding fee
+        setInputTokenWithoutFee(inputTokenWithoutFee);
 
-        const totalFees = swap.getFee().amountInSrcToken;
+        const totalFees = swap.getFee().amountInSrcToken._amount;
         console.log("    Fees: " + totalFees); // Fees paid on the output
+        setTotalFees(totalFees);
 
         let swapFee = 0;
         let networkOutputFee = 0;
@@ -203,7 +210,7 @@ export function Swap() {
         const currentMarketPrice = swap.getPriceInfo().marketPrice;
         console.log("       - market: " + currentMarketPrice); // Current Market price
 
-        const priceDifference = swap.getPriceInfo().difference;
+        const priceDifference = swap.getPriceInfo().difference.decimal;
         console.log("       - difference: " + priceDifference); // Difference between swap price and the current market price
 
         const minimumBtcFeeRate = swap.minimumBtcFeeRate;
@@ -379,15 +386,14 @@ export function Swap() {
 
             {showDetails && (
               <div className="mt-4 text-sm space-y-2 text-base-content bg-input rounded-xl p-4">
-                <p>
-                  <strong>ID:</strong> {mockSwap.getId()}
+                <p className="break-all">
+                  <strong>ID:</strong> {swapId}
                 </p>
                 <p>
-                  <strong>Input (no fee):</strong>{" "}
-                  {mockSwap.getInputWithoutFee()}
+                  <strong>Input (no fee):</strong> {inputTokenWithoutFee}
                 </p>
                 <p>
-                  <strong>Fees:</strong> {mockSwap.getFee().amountInSrcToken}
+                  <strong>Fees:</strong> {totalFees}
                 </p>
 
                 <div className="pl-3">
