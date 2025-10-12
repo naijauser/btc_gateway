@@ -395,56 +395,64 @@ export function Swap() {
           )}
 
           {/* Swap details section */}
-          <div className="mt-6 mb-3 border-t border-base-200 pt-4">
-            <button
-              className="flex items-center justify-between w-full text-left text-sm text-function font-semibold"
-              onClick={() => setShowDetails(!showDetails)}
-            >
-              <span>Swap Details</span>
-              {showDetails ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-            </button>
+          {swapDetailsGenerated && (
+            <div className="mt-6 mb-3 border-t border-base-200 pt-4">
+              <button
+                className="flex items-center justify-between w-full text-left text-sm text-function font-semibold"
+                onClick={() => setShowDetails(!showDetails)}
+              >
+                <span>Swap Details</span>
+                {showDetails ? (
+                  <ChevronUp size={18} />
+                ) : (
+                  <ChevronDown size={18} />
+                )}
+              </button>
 
-            {showDetails && (
-              <div className="mt-4 text-sm space-y-2 text-base-content bg-input rounded-xl p-4">
-                <p className="break-all">
-                  <strong>ID:</strong> {swapId}
-                </p>
-                <p>
-                  <strong>Input (no fee):</strong> {inputTokenWithoutFee}
-                </p>
-                <p>
-                  <strong>Fees:</strong> {totalFees}
-                </p>
+              {showDetails && (
+                <div className="mt-4 text-sm space-y-2 text-base-content bg-input rounded-xl p-4">
+                  <p className="break-all">
+                    <strong>ID:</strong> {swapId}
+                  </p>
+                  <p>
+                    <strong>Input (no fee):</strong> {inputTokenWithoutFee}
+                  </p>
+                  <p>
+                    <strong>Fees:</strong> {totalFees}
+                  </p>
 
-                <div className="pl-3">
-                  <p>- Swap: {swapFees}</p>
-                  <p>- Network: {networkOutputFee}</p>
+                  <div className="pl-3">
+                    <p>- Swap: {swapFees}</p>
+                    <p>- Network: {networkOutputFee}</p>
+                  </div>
+
+                  <p>
+                    <strong>Total Input (with fees):</strong>{" "}
+                    {totalInputWithFee}
+                  </p>
+                  <p>
+                    <strong>Output:</strong> {output} STRK
+                  </p>
+                  <p>
+                    <strong>Quote Expiry:</strong>{" "}
+                    {quoteExpiryInSeconds.toFixed(0)} seconds
+                  </p>
+
+                  <div className="pt-2">
+                    <p className="font-semibold text-function">Price Info:</p>
+                    <p>- Swap: {priceOfSwapExcludingFees}</p>
+                    <p>- Market: {currentMarketPrice}</p>
+                    <p>- Difference: {priceDifference}</p>
+                  </div>
+
+                  <p className="pt-2">
+                    <strong>Min BTC Fee Rate:</strong> {minimumBtcFeeRate}{" "}
+                    sats/vB
+                  </p>
                 </div>
-
-                <p>
-                  <strong>Total Input (with fees):</strong> {totalInputWithFee}
-                </p>
-                <p>
-                  <strong>Output:</strong> {output} STRK
-                </p>
-                <p>
-                  <strong>Quote Expiry:</strong>{" "}
-                  {quoteExpiryInSeconds.toFixed(0)} seconds
-                </p>
-
-                <div className="pt-2">
-                  <p className="font-semibold text-function">Price Info:</p>
-                  <p>- Swap: {priceOfSwapExcludingFees}</p>
-                  <p>- Market: {currentMarketPrice}</p>
-                  <p>- Difference: {priceDifference}</p>
-                </div>
-
-                <p className="pt-2">
-                  <strong>Min BTC Fee Rate:</strong> {minimumBtcFeeRate} sats/vB
-                </p>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          )}
 
           {/* Swap button */}
           {!swapDetailsGenerated && (
