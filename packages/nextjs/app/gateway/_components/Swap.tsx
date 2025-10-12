@@ -30,7 +30,7 @@ import { Account, Signer } from "starknet";
 import { Wallet, ChevronDown, ChevronUp } from "lucide-react";
 
 export function Swap() {
-  const [bitcoinAddress, setBitcoinAddress] = useState("");
+  const [strkAddress, setStrkAddress] = useState("");
   let [swap, setSwapObject] = useState<
     SpvFromBTCSwap<StarknetChainType> | undefined
   >(undefined);
@@ -171,7 +171,7 @@ export function Swap() {
           btcAmtInSats,
           _exactIn,
           undefined, // Source address for the swaps, not used for swaps from BTC
-          starknetAddress?.address as string, //TODO: Replace this with user collected address.
+          strkAddress,
         );
         setSwapObject(swap);
 
@@ -388,21 +388,19 @@ export function Swap() {
               </div>
             </div>
           )}
-
-          {swapDetailsGenerated && (
-            <div className="mb-6">
-              <label className="block text-sm mb-2">Address</label>
-              <div className="flex items-center bg-input rounded-xl px-3 py-2">
-                <input
-                  type="text"
-                  // value={strkAmount}
-                  // onChange={(e) => setStrkAmount(e.target.value)}
-                  placeholder="0x123...abc"
-                  className="flex-1 bg-transparent focus:outline-none text-base-content placeholder-gray-400"
-                />
-              </div>
+          
+          <div className="mb-6">
+            <label className="block text-sm mb-2">Address</label>
+            <div className="flex items-center bg-input rounded-xl px-3 py-2">
+              <input
+                type="text"
+                value={strkAddress}
+                onChange={(e) => setStrkAddress(e.target.value)}
+                placeholder="0x123...abc"
+                className="flex-1 bg-transparent focus:outline-none text-base-content placeholder-gray-400"
+              />
             </div>
-          )}
+          </div>
 
           {/* Swap details section */}
           {swapDetailsGenerated && (
