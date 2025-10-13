@@ -388,7 +388,7 @@ export function Swap() {
               </div>
             </div>
           )}
-          
+
           <div className="mb-6">
             <label className="block text-sm mb-2">Address</label>
             <div className="flex items-center bg-input rounded-xl px-3 py-2">
