@@ -18,11 +18,11 @@
     "inputs": [
       {
         "name": "_spender",
-        "type": "address"
+        "type": "core::starknet::contract_address::ContractAddress"
       },
       {
         "name": "_value",
-        "type": "uint256"
+        "type": "core::integer::u256"
       }
     ],
     "name": "approve",
@@ -43,7 +43,7 @@
     "outputs": [
       {
         "name": "",
-        "type": "uint256"
+        "type": "core::integer::u256"
       }
     ],
     "payable": false,
@@ -55,15 +55,15 @@
     "inputs": [
       {
         "name": "_from",
-        "type": "address"
+        "type": "core::starknet::contract_address::ContractAddress"
       },
       {
         "name": "_to",
-        "type": "address"
+        "type": "core::starknet::contract_address::ContractAddress"
       },
       {
         "name": "_value",
-        "type": "uint256"
+        "type": "core::integer::u256"
       }
     ],
     "name": "transferFrom",
@@ -96,14 +96,14 @@
     "inputs": [
       {
         "name": "_owner",
-        "type": "address"
+        "type": "core::starknet::contract_address::ContractAddress"
       }
     ],
     "name": "balanceOf",
     "outputs": [
       {
         "name": "balance",
-        "type": "uint256"
+        "type": "core::integer::u256"
       }
     ],
     "payable": false,
@@ -129,11 +129,11 @@
     "inputs": [
       {
         "name": "_to",
-        "type": "address"
+        "type": "core::starknet::contract_address::ContractAddress"
       },
       {
         "name": "_value",
-        "type": "uint256"
+        "type": "core::integer::u256"
       }
     ],
     "name": "transfer",
@@ -152,18 +152,18 @@
     "inputs": [
       {
         "name": "_owner",
-        "type": "address"
+        "type": "core::starknet::contract_address::ContractAddress"
       },
       {
         "name": "_spender",
-        "type": "address"
+        "type": "core::starknet::contract_address::ContractAddress"
       }
     ],
     "name": "allowance",
     "outputs": [
       {
         "name": "",
-        "type": "uint256"
+        "type": "core::integer::u256"
       }
     ],
     "payable": false,
@@ -181,17 +181,17 @@
       {
         "indexed": true,
         "name": "owner",
-        "type": "address"
+        "type": "core::starknet::contract_address::ContractAddress"
       },
       {
         "indexed": true,
         "name": "spender",
-        "type": "address"
+        "type": "core::starknet::contract_address::ContractAddress"
       },
       {
         "indexed": false,
         "name": "value",
-        "type": "uint256"
+        "type": "core::integer::u256"
       }
     ],
     "name": "Approval",
@@ -203,17 +203,17 @@
       {
         "indexed": true,
         "name": "from",
-        "type": "address"
+        "type": "core::starknet::contract_address::ContractAddress"
       },
       {
         "indexed": true,
         "name": "to",
-        "type": "address"
+        "type": "core::starknet::contract_address::ContractAddress"
       },
       {
         "indexed": false,
         "name": "value",
-        "type": "uint256"
+        "type": "core::integer::u256"
       }
     ],
     "name": "Transfer",

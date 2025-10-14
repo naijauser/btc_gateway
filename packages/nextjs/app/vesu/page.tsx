@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import { getMetadata } from "~~/utils/scaffold-stark/getMetadata";
+import ApproveVTokenContract from "./_components/ApproveVTokenContract";
 
 export const metadata = getMetadata({
   title: "Vesu",
@@ -7,7 +8,7 @@ export const metadata = getMetadata({
 });
 
 const Vesu: NextPage = () => {
-  return <div>Vesu Page</div>;
+  return <ApproveVTokenContract />;
 };
 
 export default Vesu;
