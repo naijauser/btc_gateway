@@ -28,6 +28,7 @@ import {
 } from "sats-connect";
 import { Account, Signer } from "starknet";
 import { Wallet, ChevronDown, ChevronUp } from "lucide-react";
+import LoadingButton from "~~/components/LoadingButton";
 
 export function Swap() {
   const [strkAddress, setStrkAddress] = useState("");
@@ -59,6 +60,8 @@ export function Swap() {
   const [btcAmt, setBtcAmt] = useState<string>("");
   const [btcAmtInSats, setbtcAmtInSats] = useState<bigint>(0n);
   const [usdValue, setUsdValue] = useState<number>(0);
+  const [generatingSwapDetails, setDetailsProgress] = useState(false);
+  const [swappingInProgress, setSwappingInProgress] = useState(false);
 
   // Update USD equivalent whenever BTC value changes
   useEffect(() => {
@@ -91,6 +94,7 @@ export function Swap() {
   const [swapDetailsGenerated, setSwapDetailsGenerated] = useState(false);
 
   const generateSwapDetails = async () => {
+    setDetailsProgress(true);
     try {
       const Factory = new SwapperFactory<[StarknetInitializerType]>([
         StarknetInitializer,
@@ -108,6 +112,7 @@ export function Swap() {
         console.error(
           "Xverse Wallet not found. Please install the Xverse Wallet extension.",
         );
+        setDetailsProgress(false);
         return;
       }
 
@@ -251,17 +256,22 @@ export function Swap() {
           console.error("User rejected wallet connection.", response.error);
         } else {
           console.error("Failed to connect to Xverse Wallet:", response.error);
+          setDetailsProgress(false);
         }
       }
     } catch (e) {
       console.log(e);
+      setDetailsProgress(false);
     }
+    setDetailsProgress(false);
   };
 
   const swapTokens = async () => {
+    setSwappingInProgress(true);
     try {
       if (!swap) {
         console.error("No swap object available.");
+        setSwappingInProgress(false);
         return;
       }
 
@@ -278,6 +288,7 @@ export function Swap() {
       // Obtain the funded PSBT (input already added) - ready for signing
       if (!swap) {
         console.error("No swap object available.");
+        setSwappingInProgress(false);
         return;
       }
 
@@ -328,9 +339,12 @@ export function Swap() {
         5,
         undefined,
       );
+      setSwappingInProgress(false);
     } catch (e) {
       console.log(e);
+      setSwappingInProgress(false);
     }
+    setSwappingInProgress(false);
   };
 
   return (
@@ -463,7 +477,7 @@ export function Swap() {
           )}
 
           {/* Swap button */}
-          {!swapDetailsGenerated && (
+          {/* {!swapDetailsGenerated && (
             <button
               onClick={() => generateSwapDetails()}
               disabled={false}
@@ -471,16 +485,36 @@ export function Swap() {
             >
               Generate Swap Details
             </button>
+          )} */}
+
+          {!swapDetailsGenerated && (
+            <LoadingButton
+              loading={generatingSwapDetails}
+              onClick={() => generateSwapDetails()}
+            >
+              {generatingSwapDetails
+                ? "Generating Swap Details..."
+                : "Generate Swap Details"}
+            </LoadingButton>
           )}
 
-          {swapDetailsGenerated && (
+          {/* {swapDetailsGenerated && (
             <button
               onClick={() => swapTokens()}
-              disabled={false}
+              disabled={swappingInProgress}
               className="w-full btn bg-btn-wallet text-primary-content font-semibold border-none py-3 rounded-full hover:opacity-90 transition-all"
             >
               Swap
             </button>
+          )} */}
+
+          {swapDetailsGenerated && (
+            <LoadingButton
+              loading={swappingInProgress}
+              onClick={() => swapTokens()}
+            >
+              {swappingInProgress ? "Swapping..." : "Swap"}
+            </LoadingButton>
           )}
 
           {/* Wallet/network info */}
