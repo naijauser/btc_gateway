@@ -151,7 +151,7 @@ export default function ApproveVTokenContract() {
         loading={approvingInProgress}
         onClick={() => approveContract()}
       >
-        {approvingInProgress ? "Approving..." : "Approve vWSTETH Contract"}
+        {approvingInProgress ? "Approving..." : "Approve 100 to vWSTETH Contract"}
       </LoadingButton>
 
       {/* {status && <p className="text-sm mt-2 text-base-content">{status}</p>} */}
@@ -171,7 +171,7 @@ export default function ApproveVTokenContract() {
         loading={depositingInProgress}
         onClick={() => depositToVesu()}
       >
-        {depositingInProgress ? "Supplying..." : "Supply to Vesu Pool"}
+        {depositingInProgress ? "Supplying..." : "Supply 100 to Vesu Pool"}
       </LoadingButton>
 
       {/* {status && <p className="text-sm mt-2 text-base-content">{status}</p>} */}
