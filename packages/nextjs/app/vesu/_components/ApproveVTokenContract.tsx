@@ -5,11 +5,15 @@ import { CallData, Contract, uint256, WalletAccount } from "starknet";
 import ERC20 from "../../../abi/ERC20.json";
 import { connect } from "@starknet-io/get-starknet";
 import TokenInfo from "./TokenInfo";
+import LoadingButton from "~~/components/LoadingButton";
 
 export default function ApproveVTokenContract() {
   // const [inputValue, setInputValue] = useState("");
   const [status, setStatus] = useState("");
-  const [txHash, setTxHash] = useState<string | null>(null);
+  const [approveTxHash, setApproveTxHash] = useState<string | null>(null);
+  const [depositTxHash, setDepositTxHash] = useState<string | null>(null);
+  const [approvingInProgress, setApproveStatus] = useState(false);
+  const [depositingInProgress, setDepositStatus] = useState(false);
 
   async function handleWrite() {
     try {
@@ -44,6 +48,7 @@ export default function ApproveVTokenContract() {
   }
 
   async function approveContract() {
+    setApproveStatus(true);
     let selectedWalletSWO = await connect({
       modalMode: "alwaysAsk",
     });
@@ -72,11 +77,57 @@ export default function ApproveVTokenContract() {
     });
 
     try {
-      const result = myWalletAccount.execute({
+      const result = await myWalletAccount.execute({
         contractAddress,
         entrypoint: entryPoint,
         calldata,
       });
+      setApproveTxHash(result.transaction_hash);
+      console.log("result", result);
+    } catch (e) {
+      console.log("error", e);
+    }
+
+    setApproveStatus(false);
+  }
+
+  async function depositToVesu() {
+    let selectedWalletSWO = await connect({
+      modalMode: "alwaysAsk",
+    });
+    if (!selectedWalletSWO) {
+      console.error("Wallet not connected.");
+      setStatus("Wallet not connected");
+      return;
+    }
+
+    console.log("swo", selectedWalletSWO);
+
+    const nodeUrl = "https://starknet-sepolia.public.blastapi.io/rpc/v0_8";
+    const myWalletAccount = await WalletAccount.connect(
+      { nodeUrl },
+      selectedWalletSWO,
+    );
+    console.log("account", myWalletAccount);
+
+    const contractAddress =
+      "0x03c50d1bb227bdd8ab94a69b28d43e67ba29bfac013d94d4cfab170a64a78989";
+    const entryPoint = "deposit";
+    const calldata = CallData.compile({
+      assets: uint256.bnToUint256(100n),
+      receiver:
+        "0x001d4a89c5501d4b44f101115197ae29ad54ebb081505039787c2833c18c899c",
+    });
+
+    try {
+      const result = await myWalletAccount.execute({
+        contractAddress,
+        entrypoint: entryPoint,
+        calldata,
+      });
+
+      setDepositTxHash(result.transaction_hash);
+      console.log("result", result);
     } catch (e) {
       console.log("error", e);
     }
@@ -85,7 +136,7 @@ export default function ApproveVTokenContract() {
   return (
     <div className="p-6 max-w-sm mx-auto bg-base-200 rounded-xl shadow space-y-3">
       <TokenInfo></TokenInfo>
-      <h2 className="text-lg font-semibold text-primary">Write to Contract</h2>
+      {/* <h2 className="text-lg font-semibold text-primary">Write to Contract</h2> */}
       {/* 
         <input
           type="text"
@@ -96,15 +147,35 @@ export default function ApproveVTokenContract() {
         /> 
       */}
 
-      <button onClick={approveContract} className="btn btn-primary w-full">
-        Approve vWSTETH Contract
+      <LoadingButton
+        loading={approvingInProgress}
+        onClick={() => approveContract()}
+      >
+        {approvingInProgress ? "Approving..." : "Approve vWSTETH Contract"}
+      </LoadingButton>
+
+      {/* {status && <p className="text-sm mt-2 text-base-content">{status}</p>} */}
+
+      {approveTxHash && (
+        <a
+          href={`https://sepolia.starkscan.co/tx/${approveTxHash}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block text-blue-400 text-sm mt-1 break-all"
+        >
+          View on Starkscan
+        </a>
+      )}
+
+      <button onClick={depositToVesu} className="btn btn-primary w-full">
+        Supply to Vesu Pool
       </button>
 
-      {status && <p className="text-sm mt-2 text-base-content">{status}</p>}
+      {/* {status && <p className="text-sm mt-2 text-base-content">{status}</p>} */}
 
-      {txHash && (
+      {depositTxHash && (
         <a
-          href={`https://sepolia.starkscan.co/tx/${txHash}`}
+          href={`https://sepolia.starkscan.co/tx/${depositTxHash}`}
           target="_blank"
           rel="noopener noreferrer"
           className="block text-blue-400 text-sm mt-1 break-all"
