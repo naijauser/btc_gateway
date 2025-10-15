@@ -363,135 +363,133 @@ export function Swap() {
 
   return (
     <div>
-      <div className="min-h-screen flex items-center justify-center bg-main relative">
-        {/* background glow */}
-        <div className="circle-gradient-dark" />
-        <div className="circle-gradient-blue-dark" />
+      {/* <div className="min-h-screen flex items-center justify-center bg-main relative"> */}
+      {/* background glow */}
+      {/* <div className="circle-gradient-dark" />
+        <div className="circle-gradient-blue-dark" /> */}
 
-        <div className="w-full max-w-sm md:max-w-md p-6 sm:p-8 rounded-2xl bg-component border-gradient shadow-lg backdrop-blur-lg">
-          <h1 className="text-center text-2xl font-semibold mb-6 text-function">
-            Swap BTC for STRK
-          </h1>
+      <div className="w-full max-w-sm md:max-w-md p-6 sm:p-8 rounded-2xl bg-component border-gradient shadow-lg backdrop-blur-lg">
+        <h1 className="text-center text-2xl font-semibold mb-6 text-function">
+          Swap BTC for STRK
+        </h1>
 
-          {/* From section */}
-          <div className="mb-4">
-            <label className="block text-sm mb-2">From</label>
-            {/* Optional live preview */}
-            <div className="text-sm text-gray-500">
-              sats: <code>{btcAmtInSats.toString()}</code>, USD:{" "}
-              <code>{usdValue.toFixed(2)}</code>
+        {/* From section */}
+        <div className="mb-4">
+          <label className="block text-sm mb-2">From</label>
+          {/* Optional live preview */}
+          <div className="text-sm text-gray-500">
+            sats: <code>{btcAmtInSats.toString()}</code>, USD:{" "}
+            <code>{usdValue.toFixed(2)}</code>
+          </div>
+          <div className="flex items-center bg-input rounded-xl px-3 py-2">
+            <input
+              type="number"
+              value={btcAmt}
+              onChange={handleBTCInputChange}
+              placeholder="0.00"
+              className="flex-1 bg-transparent focus:outline-none text-base-content placeholder-gray-400"
+            />
+            <div className="flex items-center gap-2 font-semibold">
+              <img src="/btc.svg" alt="BTC" className="w-5 h-5" />
+              <span>BTC</span>
             </div>
+          </div>
+        </div>
+
+        {/* To section */}
+        {swapDetailsGenerated && (
+          <div className="mb-6">
+            <label className="block text-sm mb-2">To</label>
             <div className="flex items-center bg-input rounded-xl px-3 py-2">
               <input
                 type="number"
-                value={btcAmt}
-                onChange={handleBTCInputChange}
+                value={output}
+                // onChange={(e) => setStrkAmount(e.target.value)}
+                disabled
                 placeholder="0.00"
                 className="flex-1 bg-transparent focus:outline-none text-base-content placeholder-gray-400"
               />
               <div className="flex items-center gap-2 font-semibold">
-                <img src="/btc.svg" alt="BTC" className="w-5 h-5" />
-                <span>BTC</span>
+                <img src="/strk.svg" alt="STRK" className="w-5 h-5" />
+                <span>STRK</span>
               </div>
             </div>
           </div>
+        )}
 
-          {/* To section */}
-          {swapDetailsGenerated && (
-            <div className="mb-6">
-              <label className="block text-sm mb-2">To</label>
-              <div className="flex items-center bg-input rounded-xl px-3 py-2">
-                <input
-                  type="number"
-                  value={output}
-                  // onChange={(e) => setStrkAmount(e.target.value)}
-                  disabled
-                  placeholder="0.00"
-                  className="flex-1 bg-transparent focus:outline-none text-base-content placeholder-gray-400"
-                />
-                <div className="flex items-center gap-2 font-semibold">
-                  <img src="/strk.svg" alt="STRK" className="w-5 h-5" />
-                  <span>STRK</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          <div className="mb-6">
-            <label className="block text-sm mb-2">Address</label>
-            <div className="flex items-center bg-input rounded-xl px-3 py-2">
-              <input
-                type="text"
-                value={strkAddress}
-                onChange={(e) => setStrkAddress(e.target.value)}
-                placeholder="0x123...abc"
-                className="flex-1 bg-transparent focus:outline-none text-base-content placeholder-gray-400"
-              />
-            </div>
+        <div className="mb-6">
+          <label className="block text-sm mb-2">Address</label>
+          <div className="flex items-center bg-input rounded-xl px-3 py-2">
+            <input
+              type="text"
+              value={strkAddress}
+              onChange={(e) => setStrkAddress(e.target.value)}
+              placeholder="0x123...abc"
+              className="flex-1 bg-transparent focus:outline-none text-base-content placeholder-gray-400"
+            />
           </div>
+        </div>
 
-          {/* Swap details section */}
-          {swapDetailsGenerated && (
-            <div className="mt-6 mb-3 border-t border-base-200 pt-4">
-              <button
-                className="flex items-center justify-between w-full text-left text-sm text-function font-semibold"
-                onClick={() => setShowDetails(!showDetails)}
-              >
-                <span>Swap Details</span>
-                {showDetails ? (
-                  <ChevronUp size={18} />
-                ) : (
-                  <ChevronDown size={18} />
-                )}
-              </button>
-
-              {showDetails && (
-                <div className="mt-4 text-sm space-y-2 text-base-content bg-input rounded-xl p-4">
-                  <p className="break-all">
-                    <strong>ID:</strong> {swapId}
-                  </p>
-                  <p>
-                    <strong>Input (no fee):</strong> {inputTokenWithoutFee}
-                  </p>
-                  <p>
-                    <strong>Fees:</strong> {totalFees}
-                  </p>
-
-                  <div className="pl-3">
-                    <p>- Swap: {swapFees}</p>
-                    <p>- Network: {networkOutputFee}</p>
-                  </div>
-
-                  <p>
-                    <strong>Total Input (with fees):</strong>{" "}
-                    {totalInputWithFee}
-                  </p>
-                  <p>
-                    <strong>Output:</strong> {output} STRK
-                  </p>
-                  <p>
-                    <strong>Quote Expiry:</strong>{" "}
-                    {quoteExpiryInSeconds.toFixed(0)} seconds
-                  </p>
-
-                  <div className="pt-2">
-                    <p className="font-semibold text-function">Price Info:</p>
-                    <p>- Swap: {priceOfSwapExcludingFees}</p>
-                    <p>- Market: {currentMarketPrice}</p>
-                    <p>- Difference: {priceDifference}</p>
-                  </div>
-
-                  <p className="pt-2">
-                    <strong>Min BTC Fee Rate:</strong> {minimumBtcFeeRate}{" "}
-                    sats/vB
-                  </p>
-                </div>
+        {/* Swap details section */}
+        {swapDetailsGenerated && (
+          <div className="mt-6 mb-3 border-t border-base-200 pt-4">
+            <button
+              className="flex items-center justify-between w-full text-left text-sm text-function font-semibold"
+              onClick={() => setShowDetails(!showDetails)}
+            >
+              <span>Swap Details</span>
+              {showDetails ? (
+                <ChevronUp size={18} />
+              ) : (
+                <ChevronDown size={18} />
               )}
-            </div>
-          )}
+            </button>
 
-          {/* Swap button */}
-          {/* {!swapDetailsGenerated && (
+            {showDetails && (
+              <div className="mt-4 text-sm space-y-2 text-base-content bg-input rounded-xl p-4">
+                <p className="break-all">
+                  <strong>ID:</strong> {swapId}
+                </p>
+                <p>
+                  <strong>Input (no fee):</strong> {inputTokenWithoutFee}
+                </p>
+                <p>
+                  <strong>Fees:</strong> {totalFees}
+                </p>
+
+                <div className="pl-3">
+                  <p>- Swap: {swapFees}</p>
+                  <p>- Network: {networkOutputFee}</p>
+                </div>
+
+                <p>
+                  <strong>Total Input (with fees):</strong> {totalInputWithFee}
+                </p>
+                <p>
+                  <strong>Output:</strong> {output} STRK
+                </p>
+                <p>
+                  <strong>Quote Expiry:</strong>{" "}
+                  {quoteExpiryInSeconds.toFixed(0)} seconds
+                </p>
+
+                <div className="pt-2">
+                  <p className="font-semibold text-function">Price Info:</p>
+                  <p>- Swap: {priceOfSwapExcludingFees}</p>
+                  <p>- Market: {currentMarketPrice}</p>
+                  <p>- Difference: {priceDifference}</p>
+                </div>
+
+                <p className="pt-2">
+                  <strong>Min BTC Fee Rate:</strong> {minimumBtcFeeRate} sats/vB
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Swap button */}
+        {/* {!swapDetailsGenerated && (
             <button
               onClick={() => generateSwapDetails()}
               disabled={false}
@@ -501,18 +499,18 @@ export function Swap() {
             </button>
           )} */}
 
-          {!swapDetailsGenerated && (
-            <LoadingButton
-              loading={generatingSwapDetails}
-              onClick={() => generateSwapDetails()}
-            >
-              {generatingSwapDetails
-                ? "Generating Swap Details..."
-                : "Generate Swap Details"}
-            </LoadingButton>
-          )}
+        {!swapDetailsGenerated && (
+          <LoadingButton
+            loading={generatingSwapDetails}
+            onClick={() => generateSwapDetails()}
+          >
+            {generatingSwapDetails
+              ? "Generating Swap Details..."
+              : "Generate Swap Details"}
+          </LoadingButton>
+        )}
 
-          {/* {swapDetailsGenerated && (
+        {/* {swapDetailsGenerated && (
             <button
               onClick={() => swapTokens()}
               disabled={swappingInProgress}
@@ -522,24 +520,24 @@ export function Swap() {
             </button>
           )} */}
 
-          {swapDetailsGenerated && (
-            <LoadingButton
-              loading={swappingInProgress}
-              onClick={() => swapTokens()}
-            >
-              {swappingInProgress ? "Swapping..." : "Swap"}
-            </LoadingButton>
-          )}
+        {swapDetailsGenerated && (
+          <LoadingButton
+            loading={swappingInProgress}
+            onClick={() => swapTokens()}
+          >
+            {swappingInProgress ? "Swapping..." : "Swap"}
+          </LoadingButton>
+        )}
 
-          {/* Wallet/network info */}
-          <div className="mt-6 text-center text-sm text-neutral-content">
-            <div className="flex justify-center items-center gap-2 mb-2">
-              <Wallet size={16} />
-            </div>
-            <span className="text-network">Network: Bitcoin → Starknet</span>
+        {/* Wallet/network info */}
+        <div className="mt-6 text-center text-sm text-neutral-content">
+          <div className="flex justify-center items-center gap-2 mb-2">
+            <Wallet size={16} />
           </div>
+          <span className="text-network">Network: Bitcoin → Starknet</span>
         </div>
       </div>
+      {/* </div> */}
       <PreviousTransactions></PreviousTransactions>
     </div>
   );
