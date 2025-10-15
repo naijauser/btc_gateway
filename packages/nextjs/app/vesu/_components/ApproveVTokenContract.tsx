@@ -1,19 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Account,
-  AllowArray,
-  Call,
-  CallData,
-  Contract,
-  stark,
-  uint256,
-  WalletAccount,
-} from "starknet";
+import { CallData, Contract, uint256, WalletAccount } from "starknet";
 import ERC20 from "../../../abi/ERC20.json";
 import { connect } from "@starknet-io/get-starknet";
-import { StarknetSigner } from "@atomiqlabs/chain-starknet";
+import TokenInfo from "./TokenInfo";
 
 export default function ApproveVTokenContract() {
   // const [inputValue, setInputValue] = useState("");
@@ -52,7 +43,7 @@ export default function ApproveVTokenContract() {
     }
   }
 
-  async function writeLogic() {
+  async function approveContract() {
     let selectedWalletSWO = await connect({
       modalMode: "alwaysAsk",
     });
@@ -93,6 +84,7 @@ export default function ApproveVTokenContract() {
 
   return (
     <div className="p-6 max-w-sm mx-auto bg-base-200 rounded-xl shadow space-y-3">
+      <TokenInfo></TokenInfo>
       <h2 className="text-lg font-semibold text-primary">Write to Contract</h2>
       {/* 
         <input
@@ -104,7 +96,7 @@ export default function ApproveVTokenContract() {
         /> 
       */}
 
-      <button onClick={writeLogic} className="btn btn-primary w-full">
+      <button onClick={approveContract} className="btn btn-primary w-full">
         Approve vWSTETH Contract
       </button>
 
@@ -112,7 +104,7 @@ export default function ApproveVTokenContract() {
 
       {txHash && (
         <a
-          href={`https://starkscan.co/tx/${txHash}`}
+          href={`https://sepolia.starkscan.co/tx/${txHash}`}
           target="_blank"
           rel="noopener noreferrer"
           className="block text-blue-400 text-sm mt-1 break-all"

@@ -29,6 +29,7 @@ import { Account } from "starknet";
 import { Wallet, ChevronDown, ChevronUp } from "lucide-react";
 import LoadingButton from "~~/components/LoadingButton";
 import PreviousTransactions from "~~/app/blockexplorer/_components/PreviousTransactions";
+import { useRouter } from "next/navigation";
 
 export function Swap() {
   const [strkAddress, setStrkAddress] = useState("");
@@ -62,6 +63,8 @@ export function Swap() {
   const [usdValue, setUsdValue] = useState<number>(0);
   const [generatingSwapDetails, setDetailsProgress] = useState(false);
   const [swappingInProgress, setSwappingInProgress] = useState(false);
+
+  const router = useRouter();
 
   // Update USD equivalent whenever BTC value changes
   useEffect(() => {
@@ -283,6 +286,7 @@ export function Swap() {
             " changed state to " +
             SpvFromBTCSwapState[swap.getState()],
         );
+        router.push("/vesu");
       });
 
       // Obtain the funded PSBT (input already added) - ready for signing
