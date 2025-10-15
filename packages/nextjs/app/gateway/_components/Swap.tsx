@@ -16,7 +16,6 @@ import {
 } from "@atomiqlabs/sdk";
 import { Transaction } from "@scure/btc-signer/transaction";
 import { connect } from "@starknet-io/get-starknet";
-import { set } from "nprogress";
 import { useEffect, useState } from "react";
 import {
   AddressPurpose,
@@ -26,9 +25,10 @@ import {
   RpcResult,
   SignPsbtResult,
 } from "sats-connect";
-import { Account, Signer } from "starknet";
+import { Account } from "starknet";
 import { Wallet, ChevronDown, ChevronUp } from "lucide-react";
 import LoadingButton from "~~/components/LoadingButton";
+import PreviousTransactions from "~~/app/blockexplorer/_components/PreviousTransactions";
 
 export function Swap() {
   const [strkAddress, setStrkAddress] = useState("");
@@ -318,6 +318,9 @@ export function Swap() {
       const bitcoinTxId = await swap.submitPsbt(transaction);
       console.log("Bitcoin transaction sent: " + bitcoinTxId);
 
+      // Save to localStorage
+      storeNewTransaction(bitcoinTxId);
+
       await swap.waitForBitcoinTransaction(
         (txId, confirmations, targetConfirmations, transactionETAms) => {
           if (txId == null) {
@@ -345,6 +348,13 @@ export function Swap() {
       setSwappingInProgress(false);
     }
     setSwappingInProgress(false);
+  };
+
+  const storeNewTransaction = (transactionId: string) => {
+    const stored = localStorage.getItem("btcSwapTransactions");
+    const txs = stored ? JSON.parse(stored) : [];
+    txs.unshift(transactionId); // add to top
+    localStorage.setItem("btcSwapTransactions", JSON.stringify(txs));
   };
 
   return (
@@ -526,6 +536,7 @@ export function Swap() {
           </div>
         </div>
       </div>
+      <PreviousTransactions></PreviousTransactions>
     </div>
   );
 }
