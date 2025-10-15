@@ -111,7 +111,7 @@ export default function ApproveVTokenContract() {
     console.log("account", myWalletAccount);
 
     const contractAddress =
-      "0x03c50d1bb227bdd8ab94a69b28d43e67ba29bfac013d94d4cfab170a64a78989";
+      "0x0274b83d313f1a0b6e31bd1dfc17e7490654ddf2f21d5f2d38ebd3472963e3a3";
     const entryPoint = "deposit";
     const calldata = CallData.compile({
       assets: uint256.bnToUint256(100n),
@@ -167,9 +167,12 @@ export default function ApproveVTokenContract() {
         </a>
       )}
 
-      <button onClick={depositToVesu} className="btn btn-primary w-full">
-        Supply to Vesu Pool
-      </button>
+      <LoadingButton
+        loading={depositingInProgress}
+        onClick={() => depositToVesu()}
+      >
+        {depositingInProgress ? "Supplying..." : "Supply to Vesu Pool"}
+      </LoadingButton>
 
       {/* {status && <p className="text-sm mt-2 text-base-content">{status}</p>} */}
 
