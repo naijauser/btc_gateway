@@ -1,7 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { Account, Contract, stark, uint256 } from "starknet";
+import {
+  Account,
+  AllowArray,
+  Call,
+  CallData,
+  Contract,
+  stark,
+  uint256,
+  WalletAccount,
+} from "starknet";
 import ERC20 from "../../../abi/ERC20.json";
 import { connect } from "@starknet-io/get-starknet";
 import { StarknetSigner } from "@atomiqlabs/chain-starknet";
@@ -43,9 +52,44 @@ export default function ApproveVTokenContract() {
     }
   }
 
-  // async function handleWrite() {
-  //   const contractAddress =
-  // }
+  async function writeLogic() {
+    let selectedWalletSWO = await connect({
+      modalMode: "alwaysAsk",
+    });
+    if (!selectedWalletSWO) {
+      console.error("Wallet not connected.");
+      setStatus("Wallet not connected");
+      return;
+    }
+
+    console.log("swo", selectedWalletSWO);
+
+    const nodeUrl = "https://starknet-sepolia.public.blastapi.io/rpc/v0_8";
+    const myWalletAccount = await WalletAccount.connect(
+      { nodeUrl },
+      selectedWalletSWO,
+    );
+    console.log("account", myWalletAccount);
+
+    const contractAddress =
+      "0x03c50d1bb227bdd8ab94a69b28d43e67ba29bfac013d94d4cfab170a64a78989";
+    const entryPoint = "approve";
+    const calldata = CallData.compile({
+      spender:
+        "0x0274b83d313f1a0b6e31bd1dfc17e7490654ddf2f21d5f2d38ebd3472963e3a3",
+      amount: uint256.bnToUint256(100n),
+    });
+
+    try {
+      const result = myWalletAccount.execute({
+        contractAddress,
+        entrypoint: entryPoint,
+        calldata,
+      });
+    } catch (e) {
+      console.log("error", e);
+    }
+  }
 
   return (
     <div className="p-6 max-w-sm mx-auto bg-base-200 rounded-xl shadow space-y-3">
@@ -60,7 +104,7 @@ export default function ApproveVTokenContract() {
         /> 
       */}
 
-      <button onClick={handleWrite} className="btn btn-primary w-full">
+      <button onClick={writeLogic} className="btn btn-primary w-full">
         Approve vWSTETH Contract
       </button>
 
